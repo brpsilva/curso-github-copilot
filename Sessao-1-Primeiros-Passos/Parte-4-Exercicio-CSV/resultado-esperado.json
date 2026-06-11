@@ -1,0 +1,37 @@
+[
+  {
+    "Nome": "João Silva",
+    "Idade": 30,
+    "Cidade": "São Paulo",
+    "Departamento": "Marketing",
+    "Salario": 5800
+  },
+  {
+    "Nome": "Maria Santos",
+    "Idade": 25,
+    "Cidade": "Rio de Janeiro",
+    "Departamento": "Vendas",
+    "Salario": 4200
+  },
+  {
+    "Nome": "Pedro Costa",
+    "Idade": 40,
+    "Cidade": "Curitiba",
+    "Departamento": "TI",
+    "Salario": 7500
+  },
+  {
+    "Nome": "Ana Oliveira",
+    "Idade": 35,
+    "Cidade": "Belo Horizonte",
+    "Departamento": "RH",
+    "Salario": 4800
+  },
+  {
+    "Nome": "Carlos Lima",
+    "Idade": 28,
+    "Cidade": "Porto Alegre",
+    "Departamento": "Marketing",
+    "Salario": 5200
+  }
+]

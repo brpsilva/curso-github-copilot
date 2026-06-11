@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Desafio para Casa | Everymind Ai/r</title>
+  <style>
+    :root {
+      --purple: #8957e5; --green: #1a7f37; --blue: #0969da;
+      --orange: #bc4c00; --yellow: #9a6700;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #fff; color: #1f2328;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 15px; line-height: 1.6;
+      padding: 32px; max-width: 720px; margin: 0 auto;
+    }
+    .card {
+      border: 3px solid var(--purple); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .card-header {
+      background: linear-gradient(135deg, #8957e5 0%, #5a2ea6 100%);
+      padding: 28px 32px; text-align: center; color: white;
+    }
+    .card-header .logo { font-size: 13px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7; margin-bottom: 10px; }
+    .card-header .icon { font-size: 56px; margin-bottom: 10px; display: block; }
+    .card-header h1 { font-size: 28px; font-weight: 800; margin-bottom: 4px; }
+    .card-header p { font-size: 15px; opacity: 0.85; }
+    .card-body { padding: 28px 32px; }
+    .section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #656d76; margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid #d0d7de; }
+    .steps { list-style: none; margin-bottom: 24px; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+    .step-n {
+      background: var(--purple); color: white;
+      border-radius: 50%; min-width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px; flex-shrink: 0;
+    }
+    .step h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+    .step p { font-size: 14px; color: #656d76; }
+    .prompt-box {
+      background: #f0fdf4; border: 2px solid var(--green);
+      border-radius: 8px; padding: 12px 16px; margin-top: 6px;
+      font-family: 'Consolas', monospace; font-size: 13px; color: #1a7f37;
+    }
+    .modes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+    .mode-pill {
+      border-radius: 10px; padding: 12px 8px; text-align: center;
+      border: 2px solid; font-size: 12px; font-weight: 700;
+    }
+    .mode-pill .micon { font-size: 22px; display: block; margin-bottom: 4px; }
+    .pill-ask  { background: #dbeafe; border-color: #2563eb; color: #1e40af; }
+    .pill-edit { background: #dcfce7; border-color: #16a34a; color: #14532d; }
+    .pill-agent{ background: #ffedd5; border-color: #ea580c; color: #431407; }
+    .pill-plan { background: #f3e8ff; border-color: #9333ea; color: #3b0764; }
+    .checkbox-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .checkbox-row .cb { width: 20px; height: 20px; border: 2px solid #d0d7de; border-radius: 4px; flex-shrink: 0; margin-top: 1px; }
+    .checkbox-row p { font-size: 14px; }
+    .footer-card {
+      background: #f6f8fa; border-top: 1px solid #d0d7de;
+      padding: 18px 32px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-card .logo-sm { font-size: 14px; font-weight: 700; color: var(--purple); }
+    .footer-card .date-info { font-size: 12px; color: #656d76; text-align: right; }
+    .name-line { display: flex; gap: 20px; margin-bottom: 20px; }
+    .name-field { flex: 1; border-bottom: 1px solid #d0d7de; padding-bottom: 4px; }
+    .name-label { font-size: 11px; color: #656d76; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .no-print { margin-top: 20px; text-align: center; }
+    @media print {
+      .no-print { display: none; }
+      body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="card-header">
+    <div class="logo">Everymind Ai/r — Treinamento GitHub Copilot Enterprise</div>
+    <span class="icon">🏠</span>
+    <h1>Desafio para Casa</h1>
+    <p>Sessão 1 — Primeiros Passos | 11 de junho de 2026</p>
+  </div>
+
+  <div class="card-body">
+
+    <div class="name-line">
+      <div class="name-field">
+        <div class="name-label">Nome</div>
+        <div style="height:24px"></div>
+      </div>
+      <div class="name-field" style="max-width:200px">
+        <div class="name-label">Departamento</div>
+        <div style="height:24px"></div>
+      </div>
+    </div>
+
+    <div class="section-title">📋 Passo a Passo do Desafio</div>
+    <ul class="steps">
+      <li class="step">
+        <div class="step-n">1</div>
+        <div>
+          <h4>Crie a pasta do projeto pessoal</h4>
+          <p>No VS Code, dentro de Projetos-Copilot, crie uma pasta chamada: <strong>Projeto-Pessoal</strong></p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">2</div>
+        <div>
+          <h4>Use o Agent Mode com este prompt</h4>
+          <p>Adapte os campos entre colchetes para o seu trabalho:</p>
+          <div class="prompt-box">
+            Crie uma aplicação simples relacionada ao meu trabalho em [seu departamento]. A aplicação deve [descreva o que você quer]. Use dados fictícios mas realistas.
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">3</div>
+        <div>
+          <h4>Teste os 4 modos com o resultado criado</h4>
+        </div>
+      </li>
+    </ul>
+
+    <div class="section-title">🧠 4 Modos para Testar</div>
+    <div class="modes-grid">
+      <div class="mode-pill pill-ask">
+        <span class="micon">💬</span>
+        Ask Mode<br><small>Perguntar</small>
+      </div>
+      <div class="mode-pill pill-edit">
+        <span class="micon">✏️</span>
+        Edit Mode<br><small>Modificar</small>
+      </div>
+      <div class="mode-pill pill-agent">
+        <span class="micon">🤖</span>
+        Agent Mode<br><small>Criar</small>
+      </div>
+      <div class="mode-pill pill-plan">
+        <span class="micon">📋</span>
+        Plan Mode<br><small>Planejar</small>
+      </div>
+    </div>
+
+    <div class="section-title">✅ Checklist de Conclusão</div>
+    <div class="checkbox-row"><div class="cb"></div><p>Criei a pasta Projeto-Pessoal</p></div>
+    <div class="checkbox-row"><div class="cb"></div><p>Usei o Agent Mode e criei algo relacionado ao meu trabalho</p></div>
+    <div class="checkbox-row"><div class="cb"></div><p>Usei o Ask Mode para tirar uma dúvida sobre o resultado</p></div>
+    <div class="checkbox-row"><div class="cb"></div><p>Usei o Edit Mode para melhorar ou transformar um arquivo</p></div>
+    <div class="checkbox-row"><div class="cb"></div><p>Usei o Plan Mode para planejar um projeto real</p></div>
+    <div class="checkbox-row"><div class="cb"></div><p>Compartilhei meu resultado no canal do Teams</p></div>
+
+  </div>
+
+  <div class="footer-card">
+    <div class="logo-sm">Everymind Ai/r</div>
+    <div class="date-info">
+      GitHub Copilot Enterprise<br>
+      Sessão 1 — 11/06/2026
+    </div>
+  </div>
+</div>
+
+<p class="no-print" style="margin-top:16px">
+  <a href="slides.html" style="color:#8957e5">← Voltar para os Slides da Parte 6</a>
+  &nbsp;|&nbsp;
+  <a href="../../index.html" style="color:#8957e5">← Índice</a>
+  &nbsp;|&nbsp;
+  <button onclick="window.print()" style="background:#8957e5;color:white;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:14px">🖨️ Imprimir Desafio</button>
+</p>
+
+</body>
+</html>

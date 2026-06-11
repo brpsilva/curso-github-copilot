@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parte 1 – Preparação do Ambiente | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+      --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --purple: #8957e5; --purple-light: #b083f0;
+      --green: #3fb950; --yellow: #e3b341; --blue: #58a6ff;
+      --orange: #f0883e; --red: #f85149; --accent: #58a6ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 18px; line-height: 1.6;
+      height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .hdr {
+      background: var(--surface);
+      border-bottom: 3px solid var(--accent);
+      padding: 12px 36px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    .hdr-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-size: 15px; font-weight: 700; color: var(--purple-light); }
+    .back { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .back:hover { color: var(--accent); }
+    .hdr-right { display: flex; align-items: center; gap: 12px; }
+    .part-name { font-size: 16px; font-weight: 600; color: var(--text); }
+    .dbadge { font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 20px; background: #0d1e33; color: var(--accent); }
+    main { flex: 1; overflow: hidden; position: relative; }
+    .slide {
+      display: none; height: 100%;
+      padding: 36px 68px; overflow-y: auto;
+      flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+    /* Cover slide */
+    .slide-cover { align-items: center; text-align: center; }
+    .cover-icon { font-size: 90px; margin-bottom: 18px; line-height: 1; }
+    .cover-h1 { font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .cover-h2 { font-size: 32px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+    .cover-sub { font-size: 20px; color: var(--muted); margin-bottom: 28px; }
+    .obj-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px; padding: 22px 32px;
+      text-align: left; max-width: 580px;
+    }
+    .obj-box .obj-title { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .obj-box ul { list-style: none; }
+    .obj-box li { padding: 6px 0; font-size: 17px; }
+    .obj-box li::before { content: '✓  '; color: var(--green); font-weight: 700; }
+    /* Content slides */
+    h2 { font-size: 30px; color: var(--accent); margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 21px; color: var(--yellow); margin-bottom: 12px; }
+    p { font-size: 17px; color: var(--muted); margin-bottom: 10px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 22px;
+    }
+    .card-blue { border-left: 4px solid var(--blue); }
+    .card-green { border-left: 4px solid var(--green); }
+    .card-purple { border-left: 4px solid var(--purple); }
+    .card-yellow { border-left: 4px solid var(--yellow); }
+    .card-icon { font-size: 32px; margin-bottom: 10px; }
+    .card h4 { font-size: 18px; color: var(--text); margin-bottom: 6px; }
+    .card p { font-size: 15px; color: var(--muted); }
+    .step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+    .step-n {
+      background: var(--accent); color: white;
+      border-radius: 50%; min-width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; flex-shrink: 0;
+    }
+    .step-body h4 { font-size: 18px; color: var(--text); margin-bottom: 4px; }
+    .step-body p { font-size: 15px; color: var(--muted); margin: 0; }
+    .prompt-box {
+      background: #0a1f10; border: 2px solid var(--green);
+      border-radius: 10px; padding: 16px 20px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 17px; color: #7ee787; margin: 14px 0;
+    }
+    .prompt-label {
+      font-size: 11px; color: var(--muted);
+      font-family: inherit; margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    .tip {
+      background: #0d1f2d; border: 1px solid var(--blue);
+      border-radius: 8px; padding: 12px 16px;
+      color: var(--blue); font-size: 15px; margin: 10px 0;
+    }
+    .tip::before { content: '💡 Dica: '; font-weight: 700; }
+    .highlight {
+      background: #1c1a05; border: 1px solid var(--yellow);
+      border-radius: 8px; padding: 14px 18px;
+      color: var(--yellow); font-size: 17px; margin: 12px 0;
+    }
+    .big-check { font-size: 60px; text-align: center; margin: 10px 0; }
+    /* SVG VS Code diagram */
+    .vscode-diagram { max-width: 680px; width: 100%; margin: 0 auto 20px; display: block; }
+    .ext-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 16px; margin-bottom: 12px;
+    }
+    .ext-icon { font-size: 36px; flex-shrink: 0; }
+    .ext-name { font-size: 18px; font-weight: 700; color: var(--text); }
+    .ext-desc { font-size: 15px; color: var(--muted); }
+    .ext-badge { margin-left: auto; background: var(--purple); color: white; padding: 4px 12px; border-radius: 16px; font-size: 13px; font-weight: 700; }
+    .login-steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 10px; }
+    .ok-list { list-style: none; }
+    .ok-list li { padding: 8px 0; font-size: 17px; border-bottom: 1px solid var(--border); }
+    .ok-list li:last-child { border-bottom: none; }
+    .ok-list li::before { content: '✅ '; }
+    /* Screenshots reais */
+    .ss-block { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .ss-label { font-size: 11px; color: var(--muted); padding: 6px 12px; background: var(--surface); border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; }
+    .ss-block img { width: 100%; display: block; max-height: 160px; object-fit: contain; background: #0d1117; }
+    .ss-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; }
+    .ss-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; }
+    .ss-solo { margin: 8px 0; }
+    .ss-solo .ss-block img { max-height: 180px; }
+    #slide-verificacao .ss-row-2 { grid-template-columns: repeat(4, 1fr); }
+    #slide-verificacao .ss-block img { max-height: 276px; }
+    /* Footer nav */
+    .ftr {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 12px 36px;
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .nav-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 22px; border-radius: 8px;
+      cursor: pointer; font-size: 16px; font-family: inherit;
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: white; }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    .prog { color: var(--muted); font-size: 15px; flex: 1; text-align: center; }
+    .inote { color: var(--orange); font-size: 13px; font-style: italic; max-width: 360px; text-align: right; }
+    @media print {
+      .ftr { display: none; }
+      .slide { display: block !important; page-break-after: always; height: auto; overflow: visible; }
+      body { height: auto; overflow: visible; }
+      main { overflow: visible; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="logo">Everymind Ai/r</div>
+    <a href="../../index.html" class="back">← Voltar ao Índice</a>
+  </div>
+  <div class="hdr-right">
+    <span class="part-name">Parte 1 — Preparação do Ambiente</span>
+    <span class="dbadge">⏱ 20 min</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Slide 1: Capa -->
+  <div class="slide active slide-cover">
+    <div class="cover-icon">💻</div>
+    <div class="cover-h1">Parte 1</div>
+    <div class="cover-h2">Preparação do Ambiente</div>
+    <p class="cover-sub">Vamos instalar tudo e fazer o primeiro teste com o Copilot</p>
+    <div class="obj-box">
+      <div class="obj-title">Ao final desta parte você vai ter:</div>
+      <ul>
+        <li>VS Code instalado no seu computador</li>
+        <li>Extensões do GitHub Copilot instaladas</li>
+        <li>Conta da organização webjump conectada e funcionando</li>
+        <li>Feito o seu primeiro pedido ao Copilot</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Slide 2: O que é VS Code -->
+  <div class="slide">
+    <h2>🖥️ O que é o VS Code?</h2>
+    <p style="font-size:19px; color:var(--text); margin-bottom:20px">
+      É o <strong style="color:var(--accent)">escritório digital</strong> onde você vai trabalhar junto com o GitHub Copilot.
+      Pense nele como um bloco de notas muito mais inteligente.
+    </p>
+    <img src="../../img/vscode-welcome.png" alt="Visual Studio Code — tela inicial" style="width:50%; height:auto; display:block; margin:0 auto 14px; border-radius:10px; border:1px solid var(--border);">
+    <div class="grid-3">
+      <div class="card card-blue">
+        <div class="card-icon">📁</div>
+        <h4>Seus Arquivos</h4>
+        <p>Acesse todos os arquivos do seu projeto na barra lateral</p>
+      </div>
+      <div class="card card-green">
+        <div class="card-icon">✏️</div>
+        <h4>Editor Principal</h4>
+        <p>Onde você escreve textos, cria planilhas e vê sugestões da IA</p>
+      </div>
+      <div class="card card-purple">
+        <div class="card-icon">💬</div>
+        <h4>Chat com Copilot</h4>
+        <p>Converse com a IA em português — pergunte, peça, crie!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Como instalar -->
+  <div class="slide">
+    <h2>⬇️ Como Instalar o VS Code</h2>
+    <p style="margin-bottom:24px">Vamos instalar o VS Code passo a passo — leva menos de 5 minutos:</p>
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <h4>Acesse o site oficial</h4>
+        <p>Abra o navegador e acesse: <strong style="color:var(--blue)">code.visualstudio.com</strong></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <h4>Clique em "Download for Windows"</h4>
+        <p>O botão grande azul já detecta seu sistema automaticamente</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <h4>Execute o instalador</h4>
+        <p>Abra o arquivo <strong>.exe</strong> baixado e clique em "Avançar" em todas as telas</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">4</div>
+      <div class="step-body">
+        <h4>Marque "Adicionar ao PATH"</h4>
+        <p>Durante a instalação, deixe essa opção marcada — facilita muito o uso futuro</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">5</div>
+      <div class="step-body">
+        <h4>Abra o VS Code</h4>
+        <p>Procure por <strong>VS Code</strong> no menu Iniciar e abra o programa</p>
+      </div>
+    </div>
+    <div class="tip">O VS Code é gratuito e criado pela Microsoft. É usado por mais de 15 milhões de pessoas no mundo todo.</div>
+  </div>
+
+  <!-- Slide 4: Extensões -->
+  <div class="slide">
+    <h2>🧩 Instalando as Extensões do Copilot</h2>
+    <p style="margin-bottom:20px">Agora vamos adicionar os "superpoderes" ao VS Code — as extensões do GitHub Copilot:</p>
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <h4>Clique no ícone de extensões</h4>
+        <p>Na barra lateral esquerda, clique no ícone de peças de quebra-cabeça 🧩 (ou pressione <strong>Ctrl+Shift+X</strong>)</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <h4>Instale a primeira extensão</h4>
+        <p>Pesquise por <strong style="color:var(--yellow)">"GitHub Copilot"</strong> e clique em Instalar</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <h4>Instale a segunda extensão</h4>
+        <p>Pesquise por <strong style="color:var(--yellow)">"GitHub Copilot Chat"</strong> e clique em Instalar</p>
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="ext-card">
+        <span class="ext-icon">🤖</span>
+        <div>
+          <div class="ext-name">GitHub Copilot</div>
+          <div class="ext-desc">Sugere textos e código enquanto você escreve — como autocomplete inteligente</div>
+        </div>
+        <span class="ext-badge">Obrigatória</span>
+      </div>
+      <div class="ext-card">
+        <span class="ext-icon">💬</span>
+        <div>
+          <div class="ext-name">GitHub Copilot Chat</div>
+          <div class="ext-desc">Abre um painel de chat onde você conversa com a IA em português</div>
+        </div>
+        <span class="ext-badge">Obrigatória</span>
+      </div>
+    </div>
+    <div class="ss-solo">
+      <div class="ss-block">
+        <div class="ss-label">📸 Como aparece no VS Code — pesquise "GitHub Copilot Chat" e clique em Instalar</div>
+        <img src="../../img/extensao do copilot chat.png" alt="Extensão GitHub Copilot Chat no Marketplace do VS Code">
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Login corporativo -->
+  <div class="slide">
+    <h2>🔑 Conectando sua Conta Corporativa</h2>
+
+    <div style="background:#1a0d0d; border:2px solid var(--red); border-radius:12px; padding:14px 18px; margin-bottom:14px; display:flex; align-items:flex-start; gap:12px;">
+      <span style="font-size:28px; flex-shrink:0;">⚠️</span>
+      <div>
+        <strong style="color:var(--red); font-size:17px;">Qual conta usar no login?</strong>
+        <p style="color:var(--text); font-size:15px; margin-top:4px; margin-bottom:0;">
+          Use a conta do <strong style="color:var(--yellow)">github.com</strong> que recebeu o convite da organização <strong style="color:var(--yellow)">webjump</strong> — ela tem a licença Copilot Business ativa. Veja os emails de referência abaixo:
+        </p>
+      </div>
+    </div>
+
+    <div class="ss-row-2" style="margin-bottom:14px">
+      <div class="ss-block">
+        <div class="ss-label">📧 Email de convite recebido — organização webjump</div>
+        <img src="../../img/01-convite-webjump-email.png" alt="Email de convite para a organização webjump no GitHub">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">✅ Email confirmando acesso ao GitHub Copilot Business</div>
+        <img src="../../img/02-convite-webjump-aceito.png" alt="Email confirmando acesso ao GitHub Copilot Business">
+      </div>
+    </div>
+
+    <div class="login-steps">
+      <div class="step" style="margin-bottom:10px">
+        <div class="step-n">1</div>
+        <div class="step-body">
+          <h4>Clique em "Sign in to GitHub" no VS Code</h4>
+          <p>Ao instalar as extensões a notificação aparece — ou clique no ícone de conta no canto inferior esquerdo</p>
+        </div>
+      </div>
+      <div class="step" style="margin-bottom:10px">
+        <div class="step-n">2</div>
+        <div class="step-body">
+          <h4>Entre com a conta da org <span style="color:var(--accent)">webjump</span></h4>
+          <p>Use o usuário e senha da conta github.com dos emails acima — é ela que tem a licença ativa</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">3</div>
+        <div class="step-body">
+          <h4>Clique em "Authorize" e volte ao VS Code</h4>
+          <p>O browser abre o github.com — autorize e o login está feito!</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip">Se aparecer "Verificação em duas etapas", aprove no celular ou no app autenticador.</div>
+  </div>
+
+  <!-- Slide 6: Verificação -->
+  <div class="slide" id="slide-verificacao">
+    <h2>✅ Como Saber que Está Funcionando?</h2>
+    <p style="font-size:16px; color:var(--text); margin-bottom:12px">Compare sua tela com estas capturas reais — tudo deve estar igual:</p>
+
+    <div class="ss-row-2">
+      <div class="ss-block">
+        <div class="ss-label">1️⃣ Conta GitHub conectada no VS Code</div>
+        <img src="../../img/conta do github conectada.png" alt="Conta GitHub brpsilva conectada no VS Code">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">2️⃣ Perfil com a org webjump</div>
+        <img src="../../img/comprovante que esta na org da empresa.png" alt="Perfil GitHub BRPSILVA com organização webjump">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">3️⃣ Licença Copilot Business confirmada</div>
+        <img src="../../img/confirmaçao de tipo de licença.png" alt="Licença GitHub Copilot Business gerenciada pela webjump">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">4️⃣ Contas conectadas (GitHub + Microsoft)</div>
+        <img src="../../img/confirmaçao de tipo de conta.png" alt="Contas brpsilva GitHub e Microsoft conectadas no VS Code">
+      </div>
+    </div>
+
+    <div class="highlight" style="font-size:15px; margin-top:10px">
+      ⚠️ Ícone cinza ou com X na barra inferior = login não foi feito. Clique nele → "Sign in to GitHub" → use a conta da org webjump.
+    </div>
+  </div>
+
+  <!-- Slide 7: Exercício Hello World -->
+  <div class="slide">
+    <h2>🎯 Exercício — Seu Primeiro Pedido ao Copilot!</h2>
+    <p style="font-size:19px; margin-bottom:22px">Vamos testar tudo agora. Siga o passo a passo:</p>
+    <div class="step">
+      <div class="step-n">1</div>
+      <div class="step-body">
+        <h4>Abra o chat do Copilot</h4>
+        <p>Clique no ícone 💬 na barra lateral ou pressione <strong>Ctrl+Alt+I</strong></p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <div class="step-body">
+        <h4>Digite o seguinte pedido:</h4>
+      </div>
+    </div>
+    <div class="prompt-box">
+      <div class="prompt-label">💬 Prompt — Digite exatamente assim:</div>
+      Crie um programa Hello World que exiba uma mensagem de boas-vindas em português.
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <div class="step-body">
+        <h4>Pressione Enter e veja a mágica acontecer</h4>
+        <p>O Copilot vai criar o programa automaticamente e explicar o que fez!</p>
+      </div>
+    </div>
+    <div class="big-check">🎉</div>
+    <p style="text-align:center; font-size:20px; color:var(--green)"><strong>Parabéns! Você fez seu primeiro pedido ao GitHub Copilot!</strong></p>
+  </div>
+
+</main>
+
+<footer class="ftr">
+  <button class="nav-btn" id="prev" disabled>← Anterior</button>
+  <span id="prog" class="prog">1 / 7</span>
+  <button class="nav-btn" id="nxt">Próximo →</button>
+  <span class="inote">💡 Nota do instrutor: Use as setas ← → do teclado ou clique nos botões para navegar</span>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  function go(n) {
+    slides[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(n, slides.length - 1));
+    slides[cur].classList.add('active');
+    document.getElementById('prog').textContent = (cur + 1) + ' / ' + slides.length;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('nxt').disabled = cur === slides.length - 1;
+    slides[cur].scrollTop = 0;
+  }
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('nxt').onclick = () => go(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+    if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  });
+  go(0);
+</script>
+</body>
+</html>

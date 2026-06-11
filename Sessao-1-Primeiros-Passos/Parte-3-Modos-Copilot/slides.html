@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parte 3 – Os 3 Modos do Copilot | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+      --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --purple: #8957e5; --purple-light: #b083f0;
+      --green: #3fb950; --yellow: #e3b341; --blue: #58a6ff;
+      --orange: #f0883e; --red: #f85149; --accent: #8957e5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 18px; line-height: 1.6;
+      height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .hdr {
+      background: var(--surface); border-bottom: 3px solid var(--accent);
+      padding: 12px 36px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    .hdr-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-size: 15px; font-weight: 700; color: var(--purple-light); }
+    .back { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .back:hover { color: var(--purple-light); }
+    .hdr-right { display: flex; align-items: center; gap: 12px; }
+    .part-name { font-size: 16px; font-weight: 600; }
+    .dbadge { font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 20px; background: #1a0d33; color: var(--purple-light); }
+    main { flex: 1; overflow: hidden; position: relative; }
+    .slide {
+      display: none; height: 100%; padding: 36px 68px;
+      overflow-y: auto; flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+    .slide-cover { align-items: center; text-align: center; }
+    .cover-icon { font-size: 90px; margin-bottom: 18px; line-height: 1; }
+    .cover-h1 { font-size: 48px; font-weight: 700; color: var(--purple-light); margin-bottom: 6px; }
+    .cover-h2 { font-size: 32px; font-weight: 600; margin-bottom: 12px; }
+    .cover-sub { font-size: 20px; color: var(--muted); margin-bottom: 28px; }
+    .obj-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--purple);
+      border-radius: 12px; padding: 22px 32px; text-align: left; max-width: 560px;
+    }
+    .obj-box .obj-title { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .obj-box ul { list-style: none; }
+    .obj-box li { padding: 6px 0; font-size: 17px; }
+    .obj-box li::before { content: '✓  '; color: var(--green); font-weight: 700; }
+    h2 { font-size: 30px; color: var(--purple-light); margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 22px; margin-bottom: 14px; }
+    p { font-size: 17px; color: var(--muted); margin-bottom: 10px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 22px;
+    }
+    .card h4 { font-size: 18px; margin-bottom: 6px; }
+    .card p { font-size: 15px; color: var(--muted); }
+    .prompt-box {
+      background: #0a1f10; border: 2px solid var(--green);
+      border-radius: 10px; padding: 14px 18px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 16px; color: #7ee787; margin: 10px 0;
+    }
+    .prompt-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+    /* Mode overview grid */
+    .modes-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .mode-card {
+      border-radius: 16px; padding: 24px 26px; border: 2px solid;
+      transition: transform 0.2s;
+    }
+    .mode-card:hover { transform: scale(1.02); }
+    .mode-icon { font-size: 44px; margin-bottom: 12px; }
+    .mode-name { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .mode-tagline { font-size: 16px; opacity: 0.85; margin-bottom: 10px; }
+    .mode-example { font-family: monospace; font-size: 14px; opacity: 0.7; font-style: italic; }
+    .ask-card  { background: #0d1e33; border-color: var(--blue);    color: #b3d6ff; }
+    .edit-card { background: #0d2219; border-color: var(--green);   color: #b3f5c0; }
+    .agent-card{ background: #261200; border-color: var(--orange);  color: #ffd0a0; }
+    .plan-card { background: #1a0d33; border-color: var(--purple);  color: #d4b3ff; }
+    /* Mode detail slide */
+    .mode-header {
+      border-radius: 12px; padding: 20px 26px;
+      display: flex; align-items: center; gap: 20px; margin-bottom: 22px;
+    }
+    .mode-header .icon { font-size: 52px; }
+    .mode-header h2 { border: none; margin: 0; padding: 0; font-size: 34px; }
+    .mode-header .tagline { font-size: 18px; color: inherit; opacity: 0.8; margin-top: 4px; }
+    .ask-hdr  { background: #0d1e33; border: 2px solid var(--blue);    color: #b3d6ff; }
+    .edit-hdr { background: #0d2219; border: 2px solid var(--green);   color: #b3f5c0; }
+    .agent-hdr{ background: #261200; border: 2px solid var(--orange);  color: #ffd0a0; }
+    .plan-hdr { background: #1a0d33; border: 2px solid var(--purple);  color: #d4b3ff; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .when-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px;
+    }
+    .when-card h5 { font-size: 15px; color: var(--text); margin-bottom: 4px; }
+    .when-card p { font-size: 14px; color: var(--muted); margin: 0; }
+    /* Comparison table */
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th { background: var(--surface2); color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: 1px; padding: 10px 14px; text-align: left; border: 1px solid var(--border); }
+    td { padding: 12px 14px; border: 1px solid var(--border); font-size: 15px; vertical-align: top; }
+    tr:nth-child(even) td { background: var(--surface); }
+    .mode-tag {
+      display: inline-block; padding: 3px 10px; border-radius: 16px;
+      font-size: 13px; font-weight: 700;
+    }
+    .tag-ask   { background: #0d1e33; color: var(--blue); }
+    .tag-edit  { background: #0d2219; color: var(--green); }
+    .tag-agent { background: #261200; color: var(--orange); }
+    .tag-plan  { background: #1a0d33; color: var(--purple-light); }
+    .tip {
+      background: #0d1f2d; border: 1px solid var(--blue);
+      border-radius: 8px; padding: 12px 16px;
+      color: var(--blue); font-size: 15px; margin: 10px 0;
+    }
+    .tip::before { content: '💡 '; }
+    .ftr {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 12px 36px;
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .nav-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 22px; border-radius: 8px;
+      cursor: pointer; font-size: 16px; font-family: inherit; transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    .prog { color: var(--muted); font-size: 15px; flex: 1; text-align: center; }
+    .inote { color: var(--orange); font-size: 13px; font-style: italic; max-width: 360px; text-align: right; }
+    @media print {
+      .ftr { display: none; }
+      .slide { display: block !important; page-break-after: always; height: auto; overflow: visible; }
+      body { height: auto; overflow: visible; }
+      main { overflow: visible; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="logo">Everymind Ai/r</div>
+    <a href="../../index.html" class="back">← Voltar ao Índice</a>
+  </div>
+  <div class="hdr-right">
+    <span class="part-name">Parte 3 — Os 3 Modos do Copilot</span>
+    <span class="dbadge">⏱ 30 min</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Slide 1: Capa -->
+  <div class="slide active slide-cover">
+    <div class="cover-icon">🧠</div>
+    <div class="cover-h1">Parte 3</div>
+    <div class="cover-h2">Os 3 Modos do Copilot</div>
+    <p class="cover-sub">A parte mais importante do treinamento — entenda como "falar" com a IA</p>
+    <div class="obj-box">
+      <div class="obj-title">Ao final desta parte você vai saber usar:</div>
+      <ul>
+        <li>Ask Mode — para perguntar e aprender</li>
+        <li>Agent Mode — para criar coisas do zero e executar tarefas</li>
+        <li>Plan Mode — para planejar antes de executar</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Slide 2: Visão geral 3 modos -->
+  <div class="slide">
+    <h2>⚡ Os 3 Modos em Um Olhar</h2>
+    <div class="modes-grid">
+      <div class="mode-card ask-card">
+        <div class="mode-icon">💬</div>
+        <div class="mode-name">Ask Mode</div>
+        <div class="mode-tagline">Pergunte — aprenda — tire dúvidas</div>
+        <div class="mode-example">"O que é um arquivo CSV?"</div>
+      </div>
+      <div class="mode-card agent-card">
+        <div class="mode-icon">🤖</div>
+        <div class="mode-name">Agent Mode</div>
+        <div class="mode-tagline">Execute tarefas completas do zero</div>
+        <div class="mode-example">"Crie um programa que leia CSV"</div>
+      </div>
+      <div class="mode-card plan-card">
+        <div class="mode-icon">📋</div>
+        <div class="mode-name">Plan Mode</div>
+        <div class="mode-tagline">Planeje antes de executar</div>
+        <div class="mode-example">"Crie um plano para meu projeto"</div>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:16px">Você vai usar os 3 modos hoje nos exercícios práticos. Não precisa memorizar agora — vai ficando natural com o uso!</div>
+  </div>
+
+  <!-- Slide 3: Ask Mode -->
+  <div class="slide">
+    <div class="mode-header ask-hdr">
+      <span class="icon">💬</span>
+      <div>
+        <h2>Ask Mode</h2>
+        <div class="tagline">Use para perguntar, aprender e tirar dúvidas</div>
+      </div>
+    </div>
+    <p style="color:var(--text); font-size:18px; margin-bottom:16px">
+      É como ter um especialista ao seu lado. Você pergunta qualquer coisa e o Copilot explica em linguagem simples.
+    </p>
+    <div class="grid-2" style="margin-bottom:16px">
+      <div>
+        <h3 style="color:var(--blue); font-size:17px; margin-bottom:10px">Exemplos de prompts:</h3>
+        <div class="prompt-box">
+          <div class="prompt-label">💬 Ask Mode:</div>
+          Explique o que é este arquivo.
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">💬 Ask Mode:</div>
+          O que é um arquivo CSV?
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">💬 Ask Mode:</div>
+          Como eu poderia melhorar este email?
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--blue); font-size:17px; margin-bottom:10px">Quando usar:</h3>
+        <div class="when-card" style="margin-bottom:8px"><h5>📚 Para aprender</h5><p>Entender conceitos novos sem sair do VS Code</p></div>
+        <div class="when-card" style="margin-bottom:8px"><h5>🔍 Para revisar</h5><p>Pedir para o Copilot analisar e avaliar seu trabalho</p></div>
+        <div class="when-card"><h5>❓ Para tirar dúvidas</h5><p>Qualquer pergunta que você teria para um colega especialista</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Agent Mode -->
+  <div class="slide">
+    <div class="mode-header agent-hdr">
+      <span class="icon">🤖</span>
+      <div>
+        <h2>Agent Mode</h2>
+        <div class="tagline">Use para criar e executar tarefas completas do zero</div>
+      </div>
+    </div>
+    <p style="color:var(--text); font-size:18px; margin-bottom:16px">
+      O mais poderoso dos modos. O Copilot age como um assistente autônomo — cria arquivos, faz múltiplas etapas e executa tudo sozinho.
+    </p>
+    <div class="grid-2" style="margin-bottom:16px">
+      <div>
+        <h3 style="color:var(--orange); font-size:17px; margin-bottom:10px">Exemplos de prompts:</h3>
+        <div class="prompt-box">
+          <div class="prompt-label">🤖 Agent Mode:</div>
+          Leia o arquivo dados.csv e gere uma tabela HTML com os dados.
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">🤖 Agent Mode:</div>
+          Crie um email marketing para o produto descrito no arquivo.
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">🤖 Agent Mode:</div>
+          Analise este CSV e crie um relatório com estatísticas básicas.
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--orange); font-size:17px; margin-bottom:10px">O que o Agent faz:</h3>
+        <div class="when-card" style="margin-bottom:8px"><h5>📄 Cria arquivos novos</h5><p>Gera o resultado diretamente como arquivo no seu projeto</p></div>
+        <div class="when-card" style="margin-bottom:8px"><h5>🔀 Executa múltiplas etapas</h5><p>Faz tudo sozinho: lê, processa, escreve o resultado</p></div>
+        <div class="when-card"><h5>🔄 Trabalha em sequência</h5><p>Pode encadear várias tarefas em um único pedido</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Plan Mode -->
+  <div class="slide">
+    <div class="mode-header plan-hdr">
+      <span class="icon">📋</span>
+      <div>
+        <h2>Plan Mode</h2>
+        <div class="tagline">Use para planejar antes de começar a executar</div>
+      </div>
+    </div>
+    <p style="color:var(--text); font-size:18px; margin-bottom:16px">
+      Antes de pedir para o Copilot fazer algo grande, use o Plan Mode para discutir a estratégia e validar o caminho.
+    </p>
+    <div class="grid-2" style="margin-bottom:16px">
+      <div>
+        <h3 style="color:var(--purple-light); font-size:17px; margin-bottom:10px">Exemplos de prompts:</h3>
+        <div class="prompt-box">
+          <div class="prompt-label">📋 Plan Mode:</div>
+          Crie um plano para transformar nossos dados de vendas em um relatório mensal.
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">📋 Plan Mode:</div>
+          Quais passos eu precisaria seguir para criar uma campanha de email marketing?
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">📋 Plan Mode:</div>
+          Faça um plano para organizar os arquivos do nosso departamento.
+        </div>
+      </div>
+      <div>
+        <h3 style="color:var(--purple-light); font-size:17px; margin-bottom:10px">Quando usar:</h3>
+        <div class="when-card" style="margin-bottom:8px"><h5>🏗️ Projetos maiores</h5><p>Antes de pedir uma tarefa complexa, planeje as etapas</p></div>
+        <div class="when-card" style="margin-bottom:8px"><h5>🤝 Discussão em equipe</h5><p>Apresentar o plano para o time antes de executar</p></div>
+        <div class="when-card"><h5>✅ Validação antecipada</h5><p>Confirmar que o Copilot entendeu o que você quer antes de começar</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Comparação -->
+  <div class="slide">
+    <h2>⚖️ Comparação: Quando Usar Cada Modo</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Modo</th>
+          <th>Use quando você quer...</th>
+          <th>Exemplo prático</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="mode-tag tag-ask">💬 Ask</span></td>
+          <td>Aprender, tirar dúvidas, pedir análise</td>
+          <td>"O que este texto significa?" / "Como está meu email?"</td>
+        </tr>
+        <tr>
+          <td><span class="mode-tag tag-agent">🤖 Agent</span></td>
+          <td>Criar algo novo do zero, tarefa completa</td>
+          <td>"Crie um relatório a partir deste CSV"</td>
+        </tr>
+        <tr>
+          <td><span class="mode-tag tag-plan">📋 Plan</span></td>
+          <td>Planejar etapas antes de executar</td>
+          <td>"Qual o melhor jeito de montar esta campanha?"</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="tip" style="margin-top:16px">Regra prática: não sabe qual usar? Comece sempre pelo <strong>Ask Mode</strong> — ele ajuda a esclarecer o que você precisa fazer!</div>
+  </div>
+
+  <!-- Slide 7: Exercício -->
+  <div class="slide">
+    <h2>🎯 Exercício — Testando os 3 Modos</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:20px">Abra o Copilot Chat e experimente cada modo com estes prompts:</p>
+    <div class="grid-2">
+      <div>
+        <div class="prompt-box">
+          <div class="prompt-label">💬 Ask Mode — Pergunte:</div>
+          O que é um arquivo CSV e como ele é usado em empresas?
+        </div>
+        <div class="prompt-box">
+          <div class="prompt-label">🤖 Agent Mode — Peça uma criação:</div>
+          Crie um arquivo com exemplos de dados de clientes fictícios.
+        </div>
+      </div>
+      <div>
+        <div class="prompt-box">
+          <div class="prompt-label">📋 Plan Mode — Planeje:</div>
+          Crie um plano para organizar os arquivos do meu departamento.
+        </div>
+      </div>
+    </div>
+    <p style="color:var(--green); font-size:18px; margin-top:16px; text-align:center">
+      <strong>🎉 Agora você conhece os 3 modos! Vamos para o exercício prático com CSV →</strong>
+    </p>
+  </div>
+
+</main>
+
+<footer class="ftr">
+  <button class="nav-btn" id="prev" disabled>← Anterior</button>
+  <span id="prog" class="prog">1 / 8</span>
+  <button class="nav-btn" id="nxt">Próximo →</button>
+  <span class="inote">💡 Nota: Demonstre cada modo ao vivo enquanto explica os slides 3, 4 e 5</span>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  function go(n) {
+    slides[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(n, slides.length - 1));
+    slides[cur].classList.add('active');
+    document.getElementById('prog').textContent = (cur + 1) + ' / ' + slides.length;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('nxt').disabled = cur === slides.length - 1;
+    slides[cur].scrollTop = 0;
+  }
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('nxt').onclick = () => go(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+    if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  });
+  go(0);
+</script>
+</body>
+</html>

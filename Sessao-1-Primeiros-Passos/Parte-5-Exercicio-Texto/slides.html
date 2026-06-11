@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parte 5 – Exercício Texto | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+      --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --purple: #8957e5; --purple-light: #b083f0;
+      --green: #3fb950; --yellow: #e3b341; --blue: #58a6ff;
+      --orange: #f0883e; --red: #f85149; --accent: #f0883e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 18px; line-height: 1.6;
+      height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .hdr {
+      background: var(--surface); border-bottom: 3px solid var(--accent);
+      padding: 12px 36px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    .hdr-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-size: 15px; font-weight: 700; color: var(--purple-light); }
+    .back { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .back:hover { color: var(--accent); }
+    .hdr-right { display: flex; align-items: center; gap: 12px; }
+    .part-name { font-size: 16px; font-weight: 600; }
+    .dbadge { font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 20px; background: #261200; color: var(--accent); }
+    main { flex: 1; overflow: hidden; position: relative; }
+    .slide {
+      display: none; height: 100%; padding: 36px 68px;
+      overflow-y: auto; flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+    .slide-cover { align-items: center; text-align: center; }
+    .cover-icon { font-size: 90px; margin-bottom: 18px; line-height: 1; }
+    .cover-h1 { font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .cover-h2 { font-size: 32px; font-weight: 600; margin-bottom: 12px; }
+    .cover-sub { font-size: 20px; color: var(--muted); margin-bottom: 28px; }
+    .obj-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 12px; padding: 22px 32px; text-align: left; max-width: 560px;
+    }
+    .obj-box .obj-title { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    .obj-box ul { list-style: none; }
+    .obj-box li { padding: 6px 0; font-size: 17px; }
+    .obj-box li::before { content: '✓  '; color: var(--green); font-weight: 700; }
+    h2 { font-size: 30px; color: var(--accent); margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 21px; color: var(--yellow); margin-bottom: 12px; }
+    p { font-size: 17px; color: var(--muted); margin-bottom: 10px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 22px;
+    }
+    .card-orange { border-left: 4px solid var(--orange); }
+    .card-green  { border-left: 4px solid var(--green); }
+    .card-blue   { border-left: 4px solid var(--blue); }
+    .card-purple { border-left: 4px solid var(--purple); }
+    .card-yellow { border-left: 4px solid var(--yellow); }
+    .card h4 { font-size: 18px; color: var(--text); margin-bottom: 6px; }
+    .card p  { font-size: 15px; color: var(--muted); }
+    .prompt-box {
+      background: #0a1f10; border: 2px solid var(--green);
+      border-radius: 10px; padding: 14px 18px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 17px; color: #7ee787; margin: 12px 0;
+    }
+    .prompt-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .text-display {
+      background: #0d1f2d; border: 2px solid var(--blue);
+      border-radius: 10px; padding: 18px 22px;
+      font-size: 17px; color: #a5d6ff; margin: 12px 0;
+      line-height: 1.7;
+    }
+    .text-display .label { font-size: 11px; color: var(--muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    .result-example {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; margin-top: 12px;
+    }
+    .result-example .res-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    .step { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+    .step-n {
+      background: var(--accent); color: white;
+      border-radius: 50%; min-width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; flex-shrink: 0;
+    }
+    .step-body h4 { font-size: 18px; color: var(--text); margin-bottom: 4px; }
+    .step-body p { font-size: 15px; color: var(--muted); margin: 0; }
+    .tip {
+      background: #0d1f2d; border: 1px solid var(--blue);
+      border-radius: 8px; padding: 12px 16px;
+      color: var(--blue); font-size: 15px; margin: 10px 0;
+    }
+    .tip::before { content: '💡 '; }
+    .transform-arrow { text-align: center; font-size: 32px; padding: 8px 0; }
+    .ftr {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 12px 36px;
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .nav-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 22px; border-radius: 8px;
+      cursor: pointer; font-size: 16px; font-family: inherit; transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    .prog { color: var(--muted); font-size: 15px; flex: 1; text-align: center; }
+    .inote { color: var(--orange); font-size: 13px; font-style: italic; max-width: 360px; text-align: right; }
+    @media print {
+      .ftr { display: none; }
+      .slide { display: block !important; page-break-after: always; height: auto; overflow: visible; }
+      body { height: auto; overflow: visible; }
+      main { overflow: visible; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="logo">Everymind Ai/r</div>
+    <a href="../../index.html" class="back">← Voltar ao Índice</a>
+  </div>
+  <div class="hdr-right">
+    <span class="part-name">Parte 5 — Exercício: Criação de Texto</span>
+    <span class="dbadge">⏱ 20 min</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Slide 1: Capa -->
+  <div class="slide active slide-cover">
+    <div class="cover-icon">✍️</div>
+    <div class="cover-h1">Parte 5</div>
+    <div class="cover-h2">Exercício Prático: Criação de Texto</div>
+    <p class="cover-sub">Um texto simples — três formatos diferentes em minutos</p>
+    <div class="obj-box">
+      <div class="obj-title">O que você vai criar neste exercício:</div>
+      <ul>
+        <li>Um email marketing profissional</li>
+        <li>Um post otimizado para LinkedIn</li>
+        <li>Um resumo executivo em 3 tópicos</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Slide 2: O texto base -->
+  <div class="slide">
+    <h2>📄 Nosso Texto de Partida</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:14px">
+      Abra o arquivo <strong style="color:var(--accent)">texto-base.txt</strong> da pasta Projeto-Texto no VS Code. Este é o conteúdo que vamos transformar:
+    </p>
+    <div class="text-display">
+      <div class="label">📄 texto-base.txt — texto original</div>
+      A empresa lançou um novo produto focado em inteligência artificial chamado Everymind AI Assistant. O produto utiliza tecnologia de processamento de linguagem natural para automatizar tarefas repetitivas no ambiente corporativo. Entre as funcionalidades principais estão: análise automática de documentos, geração de relatórios, resposta a emails e organização de dados. O produto está disponível para empresas de médio e grande porte a partir de junho de 2026, com planos mensais e anuais.
+    </div>
+    <div class="grid-3" style="margin-top:16px">
+      <div class="card card-blue">
+        <h4>📧 Prompt 1</h4>
+        <p>Transformar em email marketing profissional</p>
+      </div>
+      <div class="card card-orange">
+        <h4>💼 Prompt 2</h4>
+        <p>Criar post otimizado para LinkedIn</p>
+      </div>
+      <div class="card card-purple">
+        <h4>📋 Prompt 3</h4>
+        <p>Resumir em 3 tópicos executivos</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Prompt 1 - Email Marketing -->
+  <div class="slide">
+    <h2>📧 Prompt 1 — Email Marketing Profissional</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:14px">
+      Com o arquivo <strong>texto-base.txt aberto</strong>, use o <strong style="color:var(--purple-light)">Edit Mode</strong> e aplique este prompt:
+    </p>
+    <div class="prompt-box" style="font-size:17px">
+      <div class="prompt-label">✏️ Edit Mode — Copie e cole este prompt:</div>
+      Transforme este texto em um email marketing profissional para ser enviado a clientes corporativos. O email deve ter: assunto atrativo, saudação personalizada, apresentação do produto em linguagem de negócios, 3 benefícios em destaque, chamada para ação (call to action) e assinatura da Everymind Ai/r.
+    </div>
+    <div class="transform-arrow">✉️</div>
+    <div class="result-example">
+      <div class="res-label">📧 Resultado esperado (exemplo):</div>
+      <p style="color:var(--text); font-size:15px; margin-bottom:6px"><strong>Assunto:</strong> Automatize suas tarefas com Inteligência Artificial — Conheça o Everymind AI Assistant</p>
+      <p style="color:var(--muted); font-size:14px; line-height:1.7">
+        Prezado(a) [Nome],<br><br>
+        Temos o prazer de apresentar o <strong style="color:var(--accent)">Everymind AI Assistant</strong>, nossa solução de IA desenvolvida para transformar a produtividade da sua empresa...<br><br>
+        ✅ Analisa documentos automaticamente<br>
+        ✅ Gera relatórios sem esforço manual<br>
+        ✅ Responde emails e organiza dados<br><br>
+        <strong>Agende uma demonstração gratuita →</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- Slide 4: Prompt 2 - LinkedIn -->
+  <div class="slide">
+    <h2>💼 Prompt 2 — Post para LinkedIn</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:14px">
+      Ainda com o arquivo aberto, agora use o <strong style="color:var(--purple-light)">Edit Mode</strong> com este novo prompt:
+    </p>
+    <div class="prompt-box" style="font-size:17px">
+      <div class="prompt-label">✏️ Edit Mode — Copie e cole este prompt:</div>
+      Transforme este texto em uma postagem para o LinkedIn. O post deve ser envolvente, ter no máximo 200 palavras, usar emojis estrategicamente, terminar com uma pergunta para engajar a audiência e incluir 5 hashtags relevantes sobre IA e tecnologia.
+    </div>
+    <div class="transform-arrow">👔</div>
+    <div class="result-example">
+      <div class="res-label">💼 Resultado esperado (exemplo):</div>
+      <p style="color:var(--text); font-size:15px; line-height:1.7">
+        🚀 <strong>Inteligência Artificial chegando ao seu dia a dia corporativo!</strong><br><br>
+        Acabamos de lançar o Everymind AI Assistant — uma ferramenta que usa IA para automatizar tarefas que consomem horas do seu time...<br><br>
+        🤖 Análise automática de documentos<br>
+        📊 Relatórios gerados em segundos<br>
+        ✉️ Respostas de email inteligentes<br><br>
+        <em>Qual tarefa repetitiva você mais gostaria de automatizar no seu trabalho?</em><br><br>
+        <span style="color:var(--blue)">#InteligenciaArtificial #IA #Produtividade #Inovacao #EverymindAir</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Slide 5: Prompt 3 - Resumo -->
+  <div class="slide">
+    <h2>📋 Prompt 3 — Resumo em 3 Tópicos</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:14px">
+      Terceiro e último prompt deste exercício — use o <strong style="color:var(--blue)">Ask Mode</strong>:
+    </p>
+    <div class="prompt-box" style="font-size:17px">
+      <div class="prompt-label">💬 Ask Mode — Copie e cole este prompt:</div>
+      Resuma este texto em exatamente 3 tópicos objetivos, no estilo de uma apresentação executiva. Cada tópico deve ter um título em negrito e duas frases de explicação. Use linguagem formal e direta.
+    </div>
+    <div class="transform-arrow">📝</div>
+    <div class="result-example">
+      <div class="res-label">📋 Resultado esperado (exemplo):</div>
+      <p style="color:var(--text); font-size:15px; line-height:1.8">
+        <strong>1. O Produto:</strong> O Everymind AI Assistant é uma solução de inteligência artificial para automatização de tarefas corporativas. Utiliza tecnologia avançada de processamento de linguagem natural.<br><br>
+        <strong>2. Funcionalidades:</strong> O produto oferece análise de documentos, geração de relatórios, resposta a emails e organização de dados. Todas as tarefas executadas de forma automatizada e inteligente.<br><br>
+        <strong>3. Disponibilidade:</strong> Disponível para médias e grandes empresas a partir de junho de 2026. Oferece planos mensais e anuais com suporte dedicado.
+      </p>
+    </div>
+  </div>
+
+  <!-- Slide 6: Resultado final -->
+  <div class="slide">
+    <h2>✅ Resultado do Exercício de Texto</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:20px">Com um único texto, você criou 3 versões completamente diferentes:</p>
+    <div class="grid-3">
+      <div class="card card-blue">
+        <div style="font-size:36px; margin-bottom:10px">📧</div>
+        <h4>Email Marketing</h4>
+        <p>Tom formal, orientado a vendas, com chamada para ação — pronto para disparar</p>
+      </div>
+      <div class="card card-orange">
+        <div style="font-size:36px; margin-bottom:10px">💼</div>
+        <h4>Post LinkedIn</h4>
+        <p>Tom engajante, emojis, pergunta final, hashtags — otimizado para redes sociais</p>
+      </div>
+      <div class="card card-purple">
+        <div style="font-size:36px; margin-bottom:10px">📋</div>
+        <h4>Resumo Executivo</h4>
+        <p>Linguagem formal, 3 tópicos objetivos — ideal para apresentações e relatórios</p>
+      </div>
+    </div>
+    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px 22px; margin-top:16px;">
+      <p style="color:var(--accent); font-weight:700; margin-bottom:6px">🚀 Aplicação real na Everymind:</p>
+      <p style="color:var(--text)">O mesmo texto pode ser reutilizado para comunicados internos, newsletters, apresentações e redes sociais — tudo com um prompt diferente. Isso é a essência do Copilot: <strong>multiplicar o que você já tem!</strong></p>
+    </div>
+  </div>
+
+</main>
+
+<footer class="ftr">
+  <button class="nav-btn" id="prev" disabled>← Anterior</button>
+  <span id="prog" class="prog">1 / 6</span>
+  <button class="nav-btn" id="nxt">Próximo →</button>
+  <span class="inote">💡 Nota: Faça ao vivo nos slides 3, 4 e 5 — mostre as transformações na tela lado a lado</span>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  function go(n) {
+    slides[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(n, slides.length - 1));
+    slides[cur].classList.add('active');
+    document.getElementById('prog').textContent = (cur + 1) + ' / ' + slides.length;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('nxt').disabled = cur === slides.length - 1;
+    slides[cur].scrollTop = 0;
+  }
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('nxt').onclick = () => go(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+    if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  });
+  go(0);
+</script>
+</body>
+</html>

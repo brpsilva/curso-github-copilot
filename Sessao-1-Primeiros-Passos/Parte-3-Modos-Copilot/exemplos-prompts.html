@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referência Rápida — 4 Modos do Copilot | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #fff; --surface: #f6f8fa; --border: #d0d7de;
+      --text: #1f2328; --muted: #656d76;
+      --purple: #8957e5; --green: #1a7f37;
+      --blue: #0969da; --yellow: #9a6700; --orange: #bc4c00;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 14px; line-height: 1.6; padding: 30px; max-width: 900px; margin: 0 auto;
+    }
+    .header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 24px; padding-bottom: 14px; border-bottom: 3px solid var(--purple);
+    }
+    .logo { font-size: 18px; font-weight: 700; color: var(--purple); }
+    h1 { font-size: 21px; margin-bottom: 4px; }
+    .subtitle { font-size: 13px; color: var(--muted); }
+    .modes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    .mode-card {
+      border-radius: 12px; padding: 20px; border: 2px solid;
+    }
+    .mode-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .mode-icon { font-size: 32px; }
+    .mode-name { font-size: 20px; font-weight: 800; }
+    .mode-tagline { font-size: 13px; opacity: 0.8; }
+    .mode-section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 8px; font-weight: 700; }
+    .prompt-list { list-style: none; }
+    .prompt-list li {
+      background: rgba(255,255,255,0.1); border-radius: 6px;
+      padding: 8px 12px; margin-bottom: 6px;
+      font-family: 'Consolas', monospace; font-size: 13px;
+    }
+    .prompt-list li::before { content: '→ '; font-weight: 700; }
+    .when-list { list-style: none; margin-top: 10px; }
+    .when-list li { font-size: 13px; padding: 3px 0; }
+    .when-list li::before { content: '✓ '; font-weight: 700; }
+    .ask-card  { background: #dbeafe; border-color: #2563eb;   color: #1e3a5f; }
+    .edit-card { background: #dcfce7; border-color: #16a34a;   color: #14532d; }
+    .agent-card{ background: #ffedd5; border-color: #ea580c;   color: #431407; }
+    .plan-card { background: #f3e8ff; border-color: #9333ea;   color: #3b0764; }
+    .quick-ref {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; margin-bottom: 14px;
+    }
+    .quick-ref h2 { font-size: 15px; margin-bottom: 12px; color: var(--purple); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background: #e9ecef; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; text-align: left; border: 1px solid var(--border); }
+    td { padding: 8px 12px; border: 1px solid var(--border); font-size: 13px; vertical-align: top; }
+    tr:nth-child(even) td { background: var(--surface); }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+    .b-ask   { background: #dbeafe; color: #1d4ed8; }
+    .b-edit  { background: #dcfce7; color: #15803d; }
+    .b-agent { background: #ffedd5; color: #c2410c; }
+    .b-plan  { background: #f3e8ff; color: #7e22ce; }
+    .footer-print { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--border); text-align: center; font-size: 11px; color: var(--muted); }
+    .no-print { margin-top: 12px; text-align: center; }
+    @media print {
+      .no-print { display: none; }
+      body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">Everymind Ai/r</div>
+    <h1>🧠 Guia Rápido — Os 4 Modos do GitHub Copilot</h1>
+    <p class="subtitle">Sessão 1, Parte 3 — Cole na sua mesa ou salve como referência</p>
+  </div>
+</div>
+
+<div class="modes-grid">
+  <div class="mode-card ask-card">
+    <div class="mode-top">
+      <span class="mode-icon">💬</span>
+      <div>
+        <div class="mode-name">Ask Mode</div>
+        <div class="mode-tagline">Perguntar • Aprender • Analisar</div>
+      </div>
+    </div>
+    <div class="mode-section-title">Prompts típicos:</div>
+    <ul class="prompt-list">
+      <li>O que é um arquivo CSV?</li>
+      <li>Explique este texto para mim.</li>
+      <li>Como eu poderia melhorar este email?</li>
+      <li>O que significa esta mensagem de erro?</li>
+    </ul>
+    <ul class="when-list">
+      <li>Quando quiser aprender algo novo</li>
+      <li>Quando quiser revisar um trabalho</li>
+      <li>Quando quiser uma opinião da IA</li>
+    </ul>
+  </div>
+
+  <div class="mode-card edit-card">
+    <div class="mode-top">
+      <span class="mode-icon">✏️</span>
+      <div>
+        <div class="mode-name">Edit Mode</div>
+        <div class="mode-tagline">Modificar • Corrigir • Transformar</div>
+      </div>
+    </div>
+    <div class="mode-section-title">Prompts típicos:</div>
+    <ul class="prompt-list">
+      <li>Transforme este texto em HTML.</li>
+      <li>Corrija erros de português.</li>
+      <li>Torne este email mais formal.</li>
+      <li>Adicione uma introdução a este texto.</li>
+    </ul>
+    <ul class="when-list">
+      <li>Quando o arquivo já existe</li>
+      <li>Quando quer mudar o formato</li>
+      <li>Quando quer refinar um rascunho</li>
+    </ul>
+  </div>
+
+  <div class="mode-card agent-card">
+    <div class="mode-top">
+      <span class="mode-icon">🤖</span>
+      <div>
+        <div class="mode-name">Agent Mode</div>
+        <div class="mode-tagline">Criar • Executar • Automatizar</div>
+      </div>
+    </div>
+    <div class="mode-section-title">Prompts típicos:</div>
+    <ul class="prompt-list">
+      <li>Leia o CSV e gere uma tabela HTML.</li>
+      <li>Crie um email marketing com base neste texto.</li>
+      <li>Analise os dados e gere estatísticas.</li>
+      <li>Crie um relatório completo do projeto.</li>
+    </ul>
+    <ul class="when-list">
+      <li>Quando quer criar algo do zero</li>
+      <li>Quando a tarefa tem várias etapas</li>
+      <li>Quando quer automação completa</li>
+    </ul>
+  </div>
+
+  <div class="mode-card plan-card">
+    <div class="mode-top">
+      <span class="mode-icon">📋</span>
+      <div>
+        <div class="mode-name">Plan Mode</div>
+        <div class="mode-tagline">Planejar • Estruturar • Validar</div>
+      </div>
+    </div>
+    <div class="mode-section-title">Prompts típicos:</div>
+    <ul class="prompt-list">
+      <li>Crie um plano para organizar meus arquivos.</li>
+      <li>Que etapas devo seguir para criar X?</li>
+      <li>Qual a melhor abordagem para este projeto?</li>
+      <li>Ajude-me a estruturar uma campanha.</li>
+    </ul>
+    <ul class="when-list">
+      <li>Antes de começar projetos grandes</li>
+      <li>Quando quer discutir estratégia</li>
+      <li>Quando quer validar o caminho</li>
+    </ul>
+  </div>
+</div>
+
+<div class="quick-ref">
+  <h2>⚡ Tabela de Decisão Rápida</h2>
+  <table>
+    <thead>
+      <tr><th>Se você quer...</th><th>Use este modo</th><th>Dica</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aprender ou tirar uma dúvida</td>
+        <td><span class="badge b-ask">💬 Ask</span></td>
+        <td>Ideal para começar — sem risco de alterar arquivos</td>
+      </tr>
+      <tr>
+        <td>Melhorar ou corrigir algo que já existe</td>
+        <td><span class="badge b-edit">✏️ Edit</span></td>
+        <td>Selecione o texto antes de abrir o modo</td>
+      </tr>
+      <tr>
+        <td>Criar um arquivo ou relatório novo</td>
+        <td><span class="badge b-agent">🤖 Agent</span></td>
+        <td>Seja específico: diga o nome do arquivo e o que quer</td>
+      </tr>
+      <tr>
+        <td>Planejar antes de executar</td>
+        <td><span class="badge b-plan">📋 Plan</span></td>
+        <td>Use antes de pedir tarefas complexas ao Agent</td>
+      </tr>
+      <tr>
+        <td>Não tenho certeza qual usar</td>
+        <td><span class="badge b-ask">💬 Ask</span></td>
+        <td>Sempre comece pelo Ask — ele vai orientar o próximo passo</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer-print">
+  Everymind Ai/r — Treinamento GitHub Copilot Enterprise — Sessão 1 — 11/06/2026 | Guia de Referência Rápida
+</div>
+
+<p class="no-print">
+  <a href="slides.html" style="color:#8957e5">← Voltar para os Slides da Parte 3</a>
+  &nbsp;|&nbsp;
+  <a href="../../index.html" style="color:#8957e5">← Índice</a>
+  &nbsp;|&nbsp;
+  <button onclick="window.print()" style="background:#8957e5;color:white;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:14px">🖨️ Imprimir Guia</button>
+</p>
+
+</body>
+</html>

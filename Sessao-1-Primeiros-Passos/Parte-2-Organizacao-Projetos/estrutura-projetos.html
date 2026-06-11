@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estrutura de Projetos | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #fff; --surface: #f6f8fa; --border: #d0d7de;
+      --text: #1f2328; --muted: #656d76;
+      --purple: #8957e5; --green: #1a7f37; --blue: #0969da;
+      --yellow: #9a6700; --orange: #bc4c00;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 15px; line-height: 1.6; padding: 40px; max-width: 820px; margin: 0 auto;
+    }
+    .header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 28px; padding-bottom: 16px; border-bottom: 3px solid var(--purple);
+    }
+    .logo { font-size: 19px; font-weight: 700; color: var(--purple); }
+    h1 { font-size: 22px; margin-bottom: 4px; }
+    .subtitle { font-size: 14px; color: var(--muted); }
+    h2 { font-size: 17px; margin-bottom: 12px; color: var(--blue); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .tree {
+      background: #f8f9fa; border: 1px solid var(--border);
+      border-radius: 10px; padding: 22px 28px;
+      font-family: 'Consolas', 'Courier New', monospace; font-size: 14px;
+      line-height: 2; margin-bottom: 24px;
+    }
+    .tree .root { font-weight: 700; color: var(--purple); font-size: 15px; }
+    .tree .lvl1 { color: var(--blue); padding-left: 20px; }
+    .tree .lvl2 { color: var(--muted); padding-left: 40px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .proj-card {
+      border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px;
+      background: var(--surface);
+    }
+    .proj-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .proj-card p { font-size: 13px; color: var(--muted); }
+    .p1-card { border-top: 3px solid var(--blue); }
+    .p2-card { border-top: 3px solid var(--green); }
+    .p3-card { border-top: 3px solid var(--yellow); }
+    .p4-card { border-top: 3px solid var(--orange); }
+    .rules { list-style: none; margin-bottom: 24px; }
+    .rules li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .rules li:last-child { border-bottom: none; }
+    .rules .ok::before { content: '✅ '; }
+    .rules .no::before { content: '❌ '; }
+    .footer-print { margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: var(--muted); }
+    .no-print { margin-top: 16px; text-align: center; }
+    @media print {
+      .no-print { display: none; }
+      body { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">Everymind Ai/r</div>
+    <h1>📁 Modelo de Estrutura de Projetos</h1>
+    <p class="subtitle">GitHub Copilot Enterprise — Sessão 1, Parte 2</p>
+  </div>
+</div>
+
+<h2>🌳 Estrutura Completa Recomendada</h2>
+<div class="tree">
+  <div class="root">📁 Projetos-Copilot/</div>
+  <div class="lvl1">│</div>
+  <div class="lvl1">├── 📂 Projeto-CSV/</div>
+  <div class="lvl2">│   ├── 📄 dados.csv</div>
+  <div class="lvl2">│   ├── 📄 resultado-tabela.html</div>
+  <div class="lvl2">│   └── 📄 resultado-json.json</div>
+  <div class="lvl1">│</div>
+  <div class="lvl1">├── 📂 Projeto-Texto/</div>
+  <div class="lvl2">│   ├── 📄 texto-base.txt</div>
+  <div class="lvl2">│   ├── 📄 email-marketing.html</div>
+  <div class="lvl2">│   └── 📄 linkedin-post.txt</div>
+  <div class="lvl1">│</div>
+  <div class="lvl1">├── 📂 Projeto-Marketing/</div>
+  <div class="lvl2">│   ├── 📄 campanha-produto-ia.txt</div>
+  <div class="lvl2">│   └── 📄 conteudo-redes-sociais.txt</div>
+  <div class="lvl1">│</div>
+  <div class="lvl1">└── 📂 Projeto-Testes/</div>
+  <div class="lvl2">    └── 📄 meus-primeiros-testes.txt</div>
+</div>
+
+<h2>📌 Para que serve cada pasta?</h2>
+<div class="grid-2">
+  <div class="proj-card p1-card">
+    <h3>📂 Projeto-CSV</h3>
+    <p>Para trabalhar com planilhas e dados tabulares. Coloque aqui seus arquivos .csv e os resultados gerados pelo Copilot.</p>
+  </div>
+  <div class="proj-card p2-card">
+    <h3>📂 Projeto-Texto</h3>
+    <p>Para criação e transformação de textos. Emails, posts, resumos, relatórios em texto.</p>
+  </div>
+  <div class="proj-card p3-card">
+    <h3>📂 Projeto-Marketing</h3>
+    <p>Para materiais de comunicação, campanhas e conteúdo para redes sociais gerados com a IA.</p>
+  </div>
+  <div class="proj-card p4-card">
+    <h3>📂 Projeto-Testes</h3>
+    <p>Espaço livre para experimentar novas ideias, testar prompts e explorar as capacidades do Copilot.</p>
+  </div>
+</div>
+
+<h2>📏 Regras de Ouro para Nomes de Arquivo</h2>
+<ul class="rules">
+  <li class="ok">Use <strong>hífens (-)</strong> para separar palavras: <code>email-marketing-junho.html</code></li>
+  <li class="ok">Use <strong>letras minúsculas</strong> sempre que possível: <code>relatorio-vendas.txt</code></li>
+  <li class="ok">Inclua <strong>datas</strong> quando o arquivo vai mudar com o tempo: <code>reuniao-2026-06-11.txt</code></li>
+  <li class="ok">Seja <strong>descritivo</strong>: olhando o nome, qualquer pessoa entende o que tem dentro</li>
+  <li class="no">Evite <strong>espaços</strong> em nomes de arquivos: <code>meu arquivo.txt</code> → use <code>meu-arquivo.txt</code></li>
+  <li class="no">Evite <strong>acentos e cedilha</strong> em nomes: <code>relatório.txt</code> → use <code>relatorio.txt</code></li>
+  <li class="no">Nunca use <strong>versões</strong> no nome: <code>final_v2_certo_DEFINITIVO.txt</code></li>
+</ul>
+
+<div class="footer-print">
+  Everymind Ai/r — Treinamento GitHub Copilot Enterprise — Sessão 1 — 11/06/2026
+</div>
+
+<p class="no-print">
+  <a href="slides.html" style="color:#8957e5">← Voltar para os Slides da Parte 2</a>
+  &nbsp;|&nbsp;
+  <a href="../../index.html" style="color:#8957e5">← Índice</a>
+  &nbsp;|&nbsp;
+  <button onclick="window.print()" style="background:#3fb950;color:white;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:14px">🖨️ Imprimir</button>
+</p>
+
+</body>
+</html>

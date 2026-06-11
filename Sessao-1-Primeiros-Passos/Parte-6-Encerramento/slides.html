@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parte 6 – Encerramento | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+      --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --purple: #8957e5; --purple-light: #b083f0;
+      --green: #3fb950; --yellow: #e3b341; --blue: #58a6ff;
+      --orange: #f0883e; --red: #f85149; --accent: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 18px; line-height: 1.6;
+      height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .hdr {
+      background: var(--surface); border-bottom: 3px solid var(--accent);
+      padding: 12px 36px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    .hdr-left { display: flex; align-items: center; gap: 20px; }
+    .logo { font-size: 15px; font-weight: 700; color: var(--purple-light); }
+    .back { color: var(--muted); font-size: 14px; text-decoration: none; }
+    .back:hover { color: var(--accent); }
+    .hdr-right { display: flex; align-items: center; gap: 12px; }
+    .part-name { font-size: 16px; font-weight: 600; }
+    .dbadge { font-size: 13px; font-weight: 700; padding: 4px 14px; border-radius: 20px; background: #260d0d; color: var(--accent); }
+    main { flex: 1; overflow: hidden; position: relative; }
+    .slide {
+      display: none; height: 100%; padding: 36px 68px;
+      overflow-y: auto; flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+    .slide-cover { align-items: center; text-align: center; }
+    .cover-icon { font-size: 90px; margin-bottom: 18px; line-height: 1; }
+    .cover-h1 { font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+    .cover-h2 { font-size: 32px; font-weight: 600; margin-bottom: 12px; }
+    .cover-sub { font-size: 20px; color: var(--muted); }
+    h2 { font-size: 30px; color: var(--accent); margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 21px; color: var(--yellow); margin-bottom: 12px; }
+    p { font-size: 17px; color: var(--muted); margin-bottom: 10px; }
+    /* Learned items grid */
+    .learned-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .learned-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 20px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .learned-icon { font-size: 30px; flex-shrink: 0; }
+    .learned-item h4 { font-size: 16px; color: var(--text); margin-bottom: 4px; }
+    .learned-item p { font-size: 14px; color: var(--muted); margin: 0; }
+    .learned-item.done { border-left: 3px solid var(--green); }
+    /* Challenge card */
+    .challenge-box {
+      background: linear-gradient(135deg, #1a0d33 0%, #0d1117 100%);
+      border: 2px solid var(--purple); border-radius: 16px;
+      padding: 28px 32px; margin-bottom: 20px;
+    }
+    .challenge-box h3 { color: var(--purple-light); font-size: 24px; margin-bottom: 14px; }
+    .challenge-step {
+      display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;
+    }
+    .cs-n {
+      background: var(--purple); color: white;
+      border-radius: 50%; min-width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; flex-shrink: 0;
+    }
+    .cs-body h4 { font-size: 17px; color: var(--text); margin-bottom: 4px; }
+    .cs-body p { font-size: 15px; color: var(--muted); margin: 0; }
+    .prompt-box {
+      background: #0a1f10; border: 2px solid var(--green);
+      border-radius: 10px; padding: 12px 16px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 16px; color: #7ee787; margin: 10px 0;
+    }
+    .prompt-label { font-size: 11px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+    /* Next steps */
+    .next-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 16px 20px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .next-icon { font-size: 28px; flex-shrink: 0; }
+    .next-card h4 { font-size: 17px; color: var(--text); margin-bottom: 4px; }
+    .next-card p { font-size: 14px; color: var(--muted); margin: 0; }
+    /* Thank you slide */
+    .thanks-slide { text-align: center; align-items: center; }
+    .thanks-icon { font-size: 100px; margin-bottom: 16px; }
+    .thanks-h1 { font-size: 46px; font-weight: 800; color: var(--purple-light); margin-bottom: 10px; }
+    .thanks-h2 { font-size: 26px; color: var(--text); margin-bottom: 24px; }
+    .mode-pills { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: 30px; font-size: 17px; font-weight: 700;
+    }
+    .pill-ask   { background: #0d1e33; color: var(--blue);   border: 2px solid var(--blue); }
+    .pill-edit  { background: #0d2219; color: var(--green);  border: 2px solid var(--green); }
+    .pill-agent { background: #261200; color: var(--orange); border: 2px solid var(--orange); }
+    .pill-plan  { background: #1a0d33; color: var(--purple-light); border: 2px solid var(--purple); }
+    .contact-info {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 32px; margin-top: 10px;
+      display: flex; gap: 40px; justify-content: center;
+    }
+    .contact-info div { text-align: center; }
+    .contact-info .ci-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .contact-info .ci-value { font-size: 16px; color: var(--text); font-weight: 600; }
+    /* Footer */
+    .ftr {
+      background: var(--surface); border-top: 1px solid var(--border);
+      padding: 12px 36px;
+      display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    }
+    .nav-btn {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); padding: 8px 22px; border-radius: 8px;
+      cursor: pointer; font-size: 16px; font-family: inherit; transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); }
+    .nav-btn:disabled { opacity: 0.3; cursor: default; }
+    .prog { color: var(--muted); font-size: 15px; flex: 1; text-align: center; }
+    .inote { color: var(--orange); font-size: 13px; font-style: italic; max-width: 360px; text-align: right; }
+    @media print {
+      .ftr { display: none; }
+      .slide { display: block !important; page-break-after: always; height: auto; overflow: visible; }
+      body { height: auto; overflow: visible; }
+      main { overflow: visible; height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="logo">Everymind Ai/r</div>
+    <a href="../../index.html" class="back">← Voltar ao Índice</a>
+  </div>
+  <div class="hdr-right">
+    <span class="part-name">Parte 6 — Encerramento</span>
+    <span class="dbadge">⏱ 10 min</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- Slide 1: Capa -->
+  <div class="slide active slide-cover">
+    <div class="cover-icon">🎯</div>
+    <div class="cover-h1">Parte 6</div>
+    <div class="cover-h2">Encerramento</div>
+    <p class="cover-sub">Revisão, desafio para casa e próximos passos</p>
+  </div>
+
+  <!-- Slide 2: O que aprendemos -->
+  <div class="slide">
+    <h2>🏆 O que Aprendemos Hoje</h2>
+    <p style="color:var(--text); font-size:19px; margin-bottom:20px">Em 2 horas, você passou de zero para usar IA no trabalho:</p>
+    <div class="learned-grid">
+      <div class="learned-item done">
+        <span class="learned-icon">💻</span>
+        <div>
+          <h4>VS Code Instalado</h4>
+          <p>Ambiente de trabalho configurado e pronto</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">🤖</span>
+        <div>
+          <h4>Copilot Conectado</h4>
+          <p>Extensões instaladas, conta corporativa ativa</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">📁</span>
+        <div>
+          <h4>Projetos Organizados</h4>
+          <p>Estrutura de pastas criada e nomes padronizados</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">💬</span>
+        <div>
+          <h4>Ask Mode</h4>
+          <p>Perguntar, aprender e analisar com IA</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">🤖</span>
+        <div>
+          <h4>Agent Mode</h4>
+          <p>Criar arquivos e executar tarefas completas</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">📋</span>
+        <div>
+          <h4>Plan Mode</h4>
+          <p>Planejar projetos antes de executar</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">📊</span>
+        <div>
+          <h4>Exercício CSV</h4>
+          <p>Transformar planilha em tabela, JSON e relatório</p>
+        </div>
+      </div>
+      <div class="learned-item done">
+        <span class="learned-icon">✍️</span>
+        <div>
+          <h4>Exercício Texto</h4>
+          <p>Criar email, LinkedIn e resumo de um texto</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Desafio para casa -->
+  <div class="slide">
+    <h2>🏠 Desafio para Casa</h2>
+    <div class="challenge-box">
+      <h3>🎯 Seu Desafio da Semana</h3>
+      <div class="challenge-step">
+        <div class="cs-n">1</div>
+        <div class="cs-body">
+          <h4>Crie uma pasta chamada Projeto-Pessoal</h4>
+          <p>Dentro da sua pasta Projetos-Copilot no VS Code</p>
+        </div>
+      </div>
+      <div class="challenge-step">
+        <div class="cs-n">2</div>
+        <div class="cs-body">
+          <h4>Peça ao Copilot uma aplicação relacionada ao seu trabalho</h4>
+          <p>Use o Agent Mode com este prompt personalizado:</p>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">🤖 Agent Mode — Adapte este prompt ao seu trabalho:</div>
+        Crie uma aplicação simples relacionada ao meu trabalho em [seu departamento/área]. A aplicação deve [descrever o que você quer]. Use dados fictícios mas realistas.
+      </div>
+      <div class="challenge-step">
+        <div class="cs-n">3</div>
+        <div class="cs-body">
+          <h4>Teste os 3 modos com o resultado</h4>
+          <p>Ask, Agent e Plan — cada um pelo menos uma vez</p>
+        </div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--green); font-size:18px">
+      💡 <a href="desafio-casa.html" style="color:var(--green)">Baixe o cartão do desafio para imprimir →</a>
+    </p>
+  </div>
+
+  <!-- Slide 4: Próximos passos -->
+  <div class="slide">
+    <h2>🚀 Próximos Passos</h2>
+    <p style="color:var(--text); font-size:18px; margin-bottom:20px">Continue evoluindo com o GitHub Copilot:</p>
+    <div class="next-card">
+      <span class="next-icon">📅</span>
+      <div>
+        <h4>Sessão 2 — Projetos Reais do Trabalho</h4>
+        <p>Na próxima sessão, você vai trazer dados e textos reais do seu dia a dia e trabalhar com o Copilot para resolver desafios reais</p>
+      </div>
+    </div>
+    <div class="next-card">
+      <span class="next-icon">🔗</span>
+      <div>
+        <h4>GitHub Copilot Docs (em inglês)</h4>
+        <p>docs.github.com/copilot — documentação oficial com exemplos avançados de uso</p>
+      </div>
+    </div>
+    <div class="next-card">
+      <span class="next-icon">👥</span>
+      <div>
+        <h4>Canal interno da Everymind</h4>
+        <p>Compartilhe seus resultados e truques do Copilot no canal de IA do Teams — aprendemos juntos!</p>
+      </div>
+    </div>
+    <div class="next-card">
+      <span class="next-icon">💡</span>
+      <div>
+        <h4>Dica da semana</h4>
+        <p>Toda semana você vai receber um novo prompt avançado por email — aplique no seu trabalho e compartilhe o resultado!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Obrigado -->
+  <div class="slide thanks-slide">
+    <div class="thanks-icon">🎉</div>
+    <div class="thanks-h1">Parabéns!</div>
+    <div class="thanks-h2">Você concluiu a Sessão 1 do treinamento de GitHub Copilot Enterprise</div>
+    <div class="mode-pills">
+      <span class="pill pill-ask">💬 Ask</span>
+      <span class="pill pill-agent">🤖 Agent</span>
+      <span class="pill pill-plan">📋 Plan</span>
+    </div>
+    <p style="font-size:20px; color:var(--text); margin-bottom:20px">
+      Você agora tem as ferramentas para <strong style="color:var(--purple-light)">multiplicar sua produtividade</strong> com IA no dia a dia.
+    </p>
+    <div class="contact-info">
+      <div>
+        <div class="ci-label">Empresa</div>
+        <div class="ci-value">Everymind Ai/r</div>
+      </div>
+      <div>
+        <div class="ci-label">Treinamento</div>
+        <div class="ci-value">GitHub Copilot Enterprise</div>
+      </div>
+      <div>
+        <div class="ci-label">Sessão</div>
+        <div class="ci-value">1 — Primeiros Passos</div>
+      </div>
+      <div>
+        <div class="ci-label">Data</div>
+        <div class="ci-value">11 de junho de 2026</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="ftr">
+  <button class="nav-btn" id="prev" disabled>← Anterior</button>
+  <span id="prog" class="prog">1 / 5</span>
+  <button class="nav-btn" id="nxt">Próximo →</button>
+  <span class="inote">💡 Nota: Abra perguntas ao final do slide 4 antes de passar para o "Obrigado"</span>
+</footer>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let cur = 0;
+  function go(n) {
+    slides[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(n, slides.length - 1));
+    slides[cur].classList.add('active');
+    document.getElementById('prog').textContent = (cur + 1) + ' / ' + slides.length;
+    document.getElementById('prev').disabled = cur === 0;
+    document.getElementById('nxt').disabled = cur === slides.length - 1;
+    slides[cur].scrollTop = 0;
+  }
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('nxt').onclick = () => go(cur + 1);
+  document.addEventListener('keydown', e => {
+    if (['ArrowRight', 'ArrowDown', ' '].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+    if (['ArrowLeft', 'ArrowUp'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  });
+  go(0);
+</script>
+</body>
+</html>

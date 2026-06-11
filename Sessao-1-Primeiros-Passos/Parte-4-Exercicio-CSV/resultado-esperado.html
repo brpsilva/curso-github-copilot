@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultado Esperado – Tabela HTML | Everymind Ai/r</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; padding: 32px; background: #f6f8fa; color: #1f2328; }
+    .container { max-width: 860px; margin: 0 auto; background: white; border-radius: 12px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+    .header-block { border-bottom: 3px solid #8957e5; padding-bottom: 16px; margin-bottom: 24px; }
+    .logo { font-size: 14px; color: #8957e5; font-weight: 700; margin-bottom: 4px; }
+    h1 { font-size: 22px; color: #1f2328; margin-bottom: 4px; }
+    .note { font-size: 13px; color: #656d76; background: #fff8e1; border: 1px solid #f0c040; border-radius: 6px; padding: 8px 14px; margin-bottom: 20px; }
+    h2 { font-size: 17px; color: #0969da; margin-bottom: 14px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    th { background: #e3b341; color: #000; padding: 12px 16px; text-align: left; font-size: 14px; font-weight: 700; border: 1px solid #d0a030; }
+    td { padding: 10px 16px; border: 1px solid #d0d7de; font-size: 14px; }
+    tr:nth-child(even) td { background: #f6f8fa; }
+    tr:hover td { background: #fff5d6; }
+    tfoot td { background: #21262d; color: #e6edf3; font-weight: 700; font-size: 13px; padding: 10px 16px; border: 1px solid #30363d; }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+    .stat-card { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 8px; padding: 14px; text-align: center; }
+    .stat-num { font-size: 28px; font-weight: 800; color: #8957e5; }
+    .stat-label { font-size: 12px; color: #656d76; margin-top: 4px; }
+    .no-print { margin-top: 20px; text-align: center; }
+    @media print { .no-print { display: none; } body { background: white; padding: 16px; } }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header-block">
+    <div class="logo">Everymind Ai/r — GitHub Copilot Enterprise</div>
+    <h1>📊 Resultado Esperado — Tabela HTML do CSV</h1>
+  </div>
+
+  <div class="note">📌 Este é o resultado que o Copilot deve gerar quando você pede "Leia o arquivo dados.csv e gere uma tabela HTML"</div>
+
+  <h2>Tabela de Colaboradores</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Idade</th>
+        <th>Cidade</th>
+        <th>Departamento</th>
+        <th>Salário (R$)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>João Silva</td>
+        <td>30</td>
+        <td>São Paulo</td>
+        <td>Marketing</td>
+        <td>R$ 5.800,00</td>
+      </tr>
+      <tr>
+        <td>Maria Santos</td>
+        <td>25</td>
+        <td>Rio de Janeiro</td>
+        <td>Vendas</td>
+        <td>R$ 4.200,00</td>
+      </tr>
+      <tr>
+        <td>Pedro Costa</td>
+        <td>40</td>
+        <td>Curitiba</td>
+        <td>TI</td>
+        <td>R$ 7.500,00</td>
+      </tr>
+      <tr>
+        <td>Ana Oliveira</td>
+        <td>35</td>
+        <td>Belo Horizonte</td>
+        <td>RH</td>
+        <td>R$ 4.800,00</td>
+      </tr>
+      <tr>
+        <td>Carlos Lima</td>
+        <td>28</td>
+        <td>Porto Alegre</td>
+        <td>Marketing</td>
+        <td>R$ 5.200,00</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5">Total de registros: 5 colaboradores | Gerado automaticamente pelo GitHub Copilot</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Total de colaboradores</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">31,6</div>
+      <div class="stat-label">Média de idade</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">R$5.500</div>
+      <div class="stat-label">Salário médio</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Cidades diferentes</div>
+    </div>
+  </div>
+</div>
+
+<p class="no-print">
+  <a href="slides.html" style="color:#8957e5">← Voltar para os Slides da Parte 4</a>
+  &nbsp;|&nbsp;
+  <button onclick="window.print()" style="background:#e3b341;color:#000;border:none;padding:8px 18px;border-radius:8px;cursor:pointer;font-size:14px">🖨️ Imprimir</button>
+</p>
+</body>
+</html>

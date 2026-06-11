@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Copilot Enterprise – Sessão 1 | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
+      --border: #30363d; --text: #e6edf3; --muted: #8b949e;
+      --purple: #8957e5; --purple-light: #b083f0;
+      --green: #3fb950; --yellow: #e3b341; --blue: #58a6ff;
+      --orange: #f0883e; --red: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+    }
+    header {
+      background: var(--surface);
+      border-bottom: 3px solid var(--purple);
+      padding: 18px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-size: 22px; font-weight: 700; }
+    .logo .brand { color: var(--purple-light); }
+    .logo .air { color: var(--text); }
+    .header-info { color: var(--muted); font-size: 14px; text-align: right; line-height: 1.6; }
+    .hero {
+      text-align: center;
+      padding: 56px 40px 36px;
+      background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+    }
+    .hero-icon { font-size: 82px; display: block; margin-bottom: 16px; }
+    .hero h1 { font-size: 40px; color: var(--purple-light); font-weight: 700; margin-bottom: 10px; }
+    .hero .sub { font-size: 20px; color: var(--muted); margin-bottom: 6px; }
+    .hero .desc { font-size: 17px; color: var(--muted); margin-bottom: 22px; }
+    .time-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--purple); color: white;
+      padding: 10px 28px; border-radius: 30px;
+      font-size: 18px; font-weight: 700;
+    }
+    .main { max-width: 1140px; margin: 0 auto; padding: 40px; }
+    .section-label {
+      font-size: 13px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 2px;
+      margin-bottom: 20px; padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    /* Timeline */
+    .tbar {
+      height: 14px; border-radius: 8px;
+      display: flex; overflow: hidden; margin-bottom: 10px;
+    }
+    .tbar > div { height: 100%; }
+    .t1 { width: 16.7%; background: var(--blue); }
+    .t2 { width: 12.5%; background: var(--green); }
+    .t3 { width: 25%;   background: var(--purple); }
+    .t4 { width: 20.8%; background: var(--yellow); }
+    .t5 { width: 16.7%; background: var(--orange); }
+    .t6 { width: 8.3%;  background: var(--red); }
+    .tlegend {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      font-size: 13px; color: var(--muted); margin-bottom: 40px;
+    }
+    .tlegend span { display: flex; align-items: center; gap: 7px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    /* Parts grid */
+    .parts-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    }
+    .pcard {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .pcard:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    .pnum { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
+    .picon { font-size: 48px; margin-bottom: 14px; line-height: 1; display: block; }
+    .pcard h3 { font-size: 19px; font-weight: 700; margin-bottom: 8px; }
+    .pdesc { font-size: 14px; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 18px; }
+    .pfooter { display: flex; justify-content: space-between; align-items: center; }
+    .dbadge { font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 16px; }
+    .obtn {
+      font-size: 14px; font-weight: 700; padding: 8px 20px;
+      border-radius: 8px; border: none; cursor: pointer;
+      transition: opacity 0.2s; color: white; font-family: inherit;
+    }
+    .obtn:hover { opacity: 0.88; }
+    .p1 { border-top: 3px solid var(--blue); }
+    .p1:hover { border-color: var(--blue); }
+    .p1 .dbadge { background: #0d1e33; color: var(--blue); }
+    .p1 .obtn  { background: var(--blue); }
+    .p2 { border-top: 3px solid var(--green); }
+    .p2:hover { border-color: var(--green); }
+    .p2 .dbadge { background: #0d2219; color: var(--green); }
+    .p2 .obtn  { background: var(--green); }
+    .p3 { border-top: 3px solid var(--purple); }
+    .p3:hover { border-color: var(--purple); }
+    .p3 .dbadge { background: #1a0d33; color: var(--purple-light); }
+    .p3 .obtn  { background: var(--purple); }
+    .p4 { border-top: 3px solid var(--yellow); }
+    .p4:hover { border-color: var(--yellow); }
+    .p4 .dbadge { background: #261a00; color: var(--yellow); }
+    .p4 .obtn  { background: var(--yellow); color: #000; }
+    .p5 { border-top: 3px solid var(--orange); }
+    .p5:hover { border-color: var(--orange); }
+    .p5 .dbadge { background: #261200; color: var(--orange); }
+    .p5 .obtn  { background: var(--orange); }
+    .p6 { border-top: 3px solid var(--red); }
+    .p6:hover { border-color: var(--red); }
+    .p6 .dbadge { background: #260d0d; color: var(--red); }
+    .p6 .obtn  { background: var(--red); }
+    footer {
+      text-align: center; padding: 24px;
+      color: var(--muted); font-size: 13px;
+      border-top: 1px solid var(--border); margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="brand">Everymind</span> <span class="air">Ai/r</span></div>
+  <div class="header-info">
+    Treinamento Interno — GitHub Copilot Enterprise<br>
+    11 de junho de 2026
+  </div>
+</header>
+
+<section class="hero">
+  <span class="hero-icon">🤖</span>
+  <h1>GitHub Copilot Enterprise</h1>
+  <p class="sub">Sessão 1 — Primeiros Passos com Inteligência Artificial</p>
+  <p class="desc">Aprenda a usar o Copilot no seu trabalho do dia a dia — sem precisar saber programar</p>
+  <div class="time-pill">⏱ Duração total: 2 horas</div>
+</section>
+
+<div class="main">
+
+  <p class="section-label">Cronograma Visual da Sessão</p>
+  <div class="tbar">
+    <div class="t1" title="Parte 1 – 20 min"></div>
+    <div class="t2" title="Parte 2 – 15 min"></div>
+    <div class="t3" title="Parte 3 – 30 min"></div>
+    <div class="t4" title="Parte 4 – 25 min"></div>
+    <div class="t5" title="Parte 5 – 20 min"></div>
+    <div class="t6" title="Parte 6 – 10 min"></div>
+  </div>
+  <div class="tlegend">
+    <span><span class="dot" style="background:var(--blue)"></span>Parte 1 — 20 min</span>
+    <span><span class="dot" style="background:var(--green)"></span>Parte 2 — 15 min</span>
+    <span><span class="dot" style="background:var(--purple)"></span>Parte 3 — 30 min</span>
+    <span><span class="dot" style="background:var(--yellow)"></span>Parte 4 — 25 min</span>
+    <span><span class="dot" style="background:var(--orange)"></span>Parte 5 — 20 min</span>
+    <span><span class="dot" style="background:var(--red)"></span>Parte 6 — 10 min</span>
+    <span style="margin-left:auto;font-weight:700;color:var(--text)">Total: 2h</span>
+  </div>
+
+  <p class="section-label">Conteúdo da Sessão — Clique em qualquer parte para abrir</p>
+
+  <div class="parts-grid">
+
+    <a href="Sessao-1-Primeiros-Passos/Parte-1-Preparacao-Ambiente/slides.html" class="pcard p1">
+      <div class="pnum">Parte 1</div>
+      <span class="picon">💻</span>
+      <h3>Preparação do Ambiente</h3>
+      <p class="pdesc">Instalar o VS Code, adicionar as extensões do GitHub Copilot e conectar sua conta corporativa. Primeiro teste de funcionamento.</p>
+      <div class="pfooter">
+        <span class="dbadge">20 minutos</span>
+        <button class="obtn">Abrir →</button>
+      </div>
+    </a>
+
+    <a href="Sessao-1-Primeiros-Passos/Parte-2-Organizacao-Projetos/slides.html" class="pcard p2">
+      <div class="pnum">Parte 2</div>
+      <span class="picon">📁</span>
+      <h3>Organização de Projetos</h3>
+      <p class="pdesc">Criar uma estrutura de pastas organizada para trabalhar com o Copilot de forma eficiente e encontrar tudo com facilidade.</p>
+      <div class="pfooter">
+        <span class="dbadge">15 minutos</span>
+        <button class="obtn">Abrir →</button>
+      </div>
+    </a>
+
+    <a href="Sessao-1-Primeiros-Passos/Parte-3-Modos-Copilot/slides.html" class="pcard p3">
+      <div class="pnum">Parte 3</div>
+      <span class="picon">🧠</span>
+      <h3>Os 3 Modos do Copilot</h3>
+      <p class="pdesc">Entender Ask, Agent e Plan — e descobrir quando usar cada modo para conseguir os melhores resultados.</p>
+      <div class="pfooter">
+        <span class="dbadge">30 minutos</span>
+        <button class="obtn">Abrir →</button>
+      </div>
+    </a>
+
+    <a href="Sessao-1-Primeiros-Passos/Parte-4-Exercicio-CSV/slides.html" class="pcard p4">
+      <div class="pnum">Parte 4</div>
+      <span class="picon">📊</span>
+      <h3>Exercício: Planilha CSV</h3>
+      <p class="pdesc">Usar o Copilot para transformar dados de uma planilha em tabela visual, formato JSON e estatísticas automáticas.</p>
+      <div class="pfooter">
+        <span class="dbadge">25 minutos</span>
+        <button class="obtn">Abrir →</button>
+      </div>
+    </a>
+
+    <a href="Sessao-1-Primeiros-Passos/Parte-5-Exercicio-Texto/slides.html" class="pcard p5">
+      <div class="pnum">Parte 5</div>
+      <span class="picon">✍️</span>
+      <h3>Exercício: Criação de Texto</h3>
+      <p class="pdesc">Transformar um texto simples em email marketing profissional, post para LinkedIn e resumo executivo com 3 tópicos.</p>
+      <div class="pfooter">
+        <span class="dbadge">20 minutos</span>
+        <button class="obtn">Abrir →</button>
+      </div>
+    </a>
+
+    <a href="Sessao-1-Primeiros-Passos/Parte-6-Encerramento/slides.html" class="pcard p6">
+      <div class="pnum">Parte 6</div>
+      <span class="picon">🎯</span>
+      <h3>Encerramento</h3>
+      <p class="pdesc">Revisão do que aprendemos hoje, desafio para praticar em casa e próximos passos com o GitHub Copilot.</p>
+      <div class="pfooter">
+        <span class="dbadge">10 minutos</span>
+        <button class="obtn">Abrir →</button>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 Everymind Ai/r &nbsp;·&nbsp; Material de Treinamento Interno &nbsp;·&nbsp; GitHub Copilot Enterprise — Sessão 1
+</footer>
+
+</body>
+</html>

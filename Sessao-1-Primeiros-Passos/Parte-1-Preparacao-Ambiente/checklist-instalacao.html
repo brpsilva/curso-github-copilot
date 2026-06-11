@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist de Instalação | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #fff; --surface: #f6f8fa; --border: #d0d7de;
+      --text: #1f2328; --muted: #656d76; --purple: #8957e5;
+      --green: #1a7f37; --blue: #0969da;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 16px; line-height: 1.6; padding: 40px;
+      max-width: 800px; margin: 0 auto;
+    }
+    .header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 32px; padding-bottom: 20px;
+      border-bottom: 3px solid var(--purple);
+    }
+    .logo { font-size: 20px; font-weight: 700; color: var(--purple); }
+    .header-info { text-align: right; font-size: 14px; color: var(--muted); line-height: 1.8; }
+    h1 { font-size: 26px; margin-bottom: 6px; }
+    .subtitle { font-size: 15px; color: var(--muted); margin-bottom: 30px; }
+    .section { margin-bottom: 28px; }
+    .section-title {
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--muted); margin-bottom: 12px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 10px 0; border-bottom: 1px solid #f0f0f0;
+    }
+    .item:last-child { border-bottom: none; }
+    .checkbox {
+      width: 22px; height: 22px; border: 2px solid var(--border);
+      border-radius: 4px; flex-shrink: 0; margin-top: 1px;
+      background: white;
+    }
+    .item-content h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+    .item-content p { font-size: 13px; color: var(--muted); }
+    .note { background: #fff8e1; border: 1px solid #f0c040; border-radius: 6px; padding: 10px 14px; font-size: 14px; color: #7a5c00; margin-top: 20px; }
+    .footer-print { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--muted); }
+    .no-print { }
+    @media print {
+      body { padding: 20px; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="logo">Everymind Ai/r</div>
+    <h1>✅ Checklist de Instalação</h1>
+    <p class="subtitle">GitHub Copilot Enterprise — Sessão 1, Parte 1</p>
+  </div>
+  <div class="header-info">
+    Nome: _________________________________<br>
+    Data: 11/06/2026<br>
+    Turma: ________________________________
+  </div>
+</div>
+
+<!-- SEÇÃO 1 -->
+<div class="section">
+  <div class="section-title">1. Instalação do VS Code</div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Acessei o site code.visualstudio.com</h4>
+      <p>Abri o site no navegador e localizei o botão de download</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Baixei o instalador do VS Code para Windows</h4>
+      <p>Cliquei em "Download for Windows" e o arquivo .exe foi baixado</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Executei o instalador até o final</h4>
+      <p>Avancei por todas as telas do instalador e marquei "Adicionar ao PATH"</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>O VS Code abriu corretamente</h4>
+      <p>Encontrei o VS Code no menu Iniciar e ele abriu sem erros</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO 2 -->
+<div class="section">
+  <div class="section-title">2. Instalação das Extensões</div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Abri o painel de extensões (Ctrl+Shift+X)</h4>
+      <p>Cliquei no ícone 🧩 na barra lateral esquerda</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Instalei a extensão "GitHub Copilot"</h4>
+      <p>Pesquisei, encontrei e cliquei em Instalar — extensão principal da IA</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Instalei a extensão "GitHub Copilot Chat"</h4>
+      <p>Pesquisei, encontrei e cliquei em Instalar — extensão do painel de chat</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEÇÃO 3 -->
+<div class="section">
+  <div class="section-title">3. Login com Conta Corporativa</div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Cliquei em "Sign in to GitHub" quando solicitado</h4>
+      <p>O VS Code pediu login após instalar as extensões</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Entrei com a conta do GitHub da organização <strong>webjump</strong></h4>
+      <p>É a conta github.com que recebeu o convite da org webjump — não o e-mail do Windows nem o e-mail corporativo</p>
+  <div class="section-title">4. Verificação e Teste</div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>O ícone do Copilot está ativo no canto inferior direito</h4>
+      <p>Ícone colorido (não cinza nem com X)</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>O painel de chat 💬 aparece na barra lateral</h4>
+      <p>Consigo abrir o chat do Copilot</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="checkbox"></div>
+    <div class="item-content">
+      <h4>Fiz meu primeiro pedido ao Copilot</h4>
+      <p>Pedi "Crie um programa Hello World em português" e o Copilot respondeu</p>
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  ⚠️ <strong>Problemas?</strong> Se o ícone do Copilot aparecer cinza ou com X, clique sobre ele e selecione "Sign in to GitHub". Use sempre o e-mail corporativo @everymind.com.br.
+</div>
+
+<div class="footer-print">
+  Everymind Ai/r — Treinamento GitHub Copilot Enterprise — Sessão 1 — 11/06/2026
+</div>
+
+<p class="no-print" style="margin-top:20px; text-align:center">
+  <a href="slides.html" style="color:#8957e5">← Voltar para os Slides da Parte 1</a>
+  &nbsp;|&nbsp;
+  <a href="../../index.html" style="color:#8957e5">← Voltar ao Índice</a>
+  &nbsp;|&nbsp;
+  <button onclick="window.print()" style="background:#8957e5;color:white;border:none;padding:8px 20px;border-radius:8px;cursor:pointer;font-size:15px">🖨️ Imprimir Checklist</button>
+</p>
+
+</body>
+</html>
