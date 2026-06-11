@@ -104,6 +104,11 @@
       border-radius: 8px; padding: 14px 18px;
       color: var(--yellow); font-size: 17px; margin: 12px 0;
     }
+    .privacy-note {
+      background: var(--surface2); border: 1px dashed var(--border);
+      border-radius: 10px; padding: 18px 22px; color: var(--muted);
+      font-size: 16px; margin: 12px 0 18px;
+    }
     .big-check { font-size: 60px; text-align: center; margin: 10px 0; }
     /* SVG VS Code diagram */
     .vscode-diagram { max-width: 680px; width: 100%; margin: 0 auto 20px; display: block; }
@@ -181,7 +186,7 @@
       <ul>
         <li>VS Code instalado no seu computador</li>
         <li>Extensões do GitHub Copilot instaladas</li>
-        <li>Conta da organização webjump conectada e funcionando</li>
+        <li>Conta da organização da empresa conectada e funcionando</li>
         <li>Feito o seu primeiro pedido ao Copilot</li>
       </ul>
     </div>
@@ -194,7 +199,7 @@
       É o <strong style="color:var(--accent)">escritório digital</strong> onde você vai trabalhar junto com o GitHub Copilot.
       Pense nele como um bloco de notas muito mais inteligente.
     </p>
-    <img src="../../img/vscode-welcome.png" alt="Visual Studio Code — tela inicial" style="width:50%; height:auto; display:block; margin:0 auto 14px; border-radius:10px; border:1px solid var(--border);">
+    <div class="privacy-note">Imagem demonstrativa removida da versão publicada. O instrutor pode exibir a tela real localmente durante a aula.</div>
     <div class="grid-3">
       <div class="card card-blue">
         <div class="card-icon">📁</div>
@@ -299,12 +304,7 @@
         <span class="ext-badge">Obrigatória</span>
       </div>
     </div>
-    <div class="ss-solo">
-      <div class="ss-block">
-        <div class="ss-label">📸 Como aparece no VS Code — pesquise "GitHub Copilot Chat" e clique em Instalar</div>
-        <img src="../../img/extensao do copilot chat.png" alt="Extensão GitHub Copilot Chat no Marketplace do VS Code">
-      </div>
-    </div>
+    <div class="privacy-note">Print removido da versão publicada. Para demonstrar ao vivo, pesquise "GitHub Copilot Chat" no painel de extensões do VS Code.</div>
   </div>
 
   <!-- Slide 5: Login corporativo -->
@@ -316,21 +316,12 @@
       <div>
         <strong style="color:var(--red); font-size:17px;">Qual conta usar no login?</strong>
         <p style="color:var(--text); font-size:15px; margin-top:4px; margin-bottom:0;">
-          Use a conta do <strong style="color:var(--yellow)">github.com</strong> que recebeu o convite da organização <strong style="color:var(--yellow)">webjump</strong> — ela tem a licença Copilot Business ativa. Veja os emails de referência abaixo:
+          Use a conta do <strong style="color:var(--yellow)">github.com</strong> que recebeu o convite da organização da empresa — ela tem a licença Copilot Business ativa.
         </p>
       </div>
     </div>
 
-    <div class="ss-row-2" style="margin-bottom:14px">
-      <div class="ss-block">
-        <div class="ss-label">📧 Email de convite recebido — organização webjump</div>
-        <img src="../../img/01-convite-webjump-email.png" alt="Email de convite para a organização webjump no GitHub">
-      </div>
-      <div class="ss-block">
-        <div class="ss-label">✅ Email confirmando acesso ao GitHub Copilot Business</div>
-        <img src="../../img/02-convite-webjump-aceito.png" alt="Email confirmando acesso ao GitHub Copilot Business">
-      </div>
-    </div>
+    <div class="privacy-note">Prints de e-mail removidos da versão publicada para proteger dados internos. Use exemplos locais somente durante a aula.</div>
 
     <div class="login-steps">
       <div class="step" style="margin-bottom:10px">
@@ -343,7 +334,7 @@
       <div class="step" style="margin-bottom:10px">
         <div class="step-n">2</div>
         <div class="step-body">
-          <h4>Entre com a conta da org <span style="color:var(--accent)">webjump</span></h4>
+          <h4>Entre com a conta da organização da empresa</h4>
           <p>Use o usuário e senha da conta github.com dos emails acima — é ela que tem a licença ativa</p>
         </div>
       </div>
@@ -361,29 +352,17 @@
   <!-- Slide 6: Verificação -->
   <div class="slide" id="slide-verificacao">
     <h2>✅ Como Saber que Está Funcionando?</h2>
-    <p style="font-size:16px; color:var(--text); margin-bottom:12px">Compare sua tela com estas capturas reais — tudo deve estar igual:</p>
+    <p style="font-size:16px; color:var(--text); margin-bottom:12px">Confira estes sinais no VS Code e no GitHub:</p>
 
-    <div class="ss-row-2">
-      <div class="ss-block">
-        <div class="ss-label">1️⃣ Conta GitHub conectada no VS Code</div>
-        <img src="../../img/conta do github conectada.png" alt="Conta GitHub brpsilva conectada no VS Code">
-      </div>
-      <div class="ss-block">
-        <div class="ss-label">2️⃣ Perfil com a org webjump</div>
-        <img src="../../img/comprovante que esta na org da empresa.png" alt="Perfil GitHub BRPSILVA com organização webjump">
-      </div>
-      <div class="ss-block">
-        <div class="ss-label">3️⃣ Licença Copilot Business confirmada</div>
-        <img src="../../img/confirmaçao de tipo de licença.png" alt="Licença GitHub Copilot Business gerenciada pela webjump">
-      </div>
-      <div class="ss-block">
-        <div class="ss-label">4️⃣ Contas conectadas (GitHub + Microsoft)</div>
-        <img src="../../img/confirmaçao de tipo de conta.png" alt="Contas brpsilva GitHub e Microsoft conectadas no VS Code">
-      </div>
-    </div>
+    <ul class="ok-list">
+      <li>Conta GitHub conectada no VS Code</li>
+      <li>Perfil vinculado à organização da empresa</li>
+      <li>Licença GitHub Copilot Business confirmada</li>
+      <li>Contas GitHub e Microsoft conectadas, quando solicitado</li>
+    </ul>
 
     <div class="highlight" style="font-size:15px; margin-top:10px">
-      ⚠️ Ícone cinza ou com X na barra inferior = login não foi feito. Clique nele → "Sign in to GitHub" → use a conta da org webjump.
+      ⚠️ Ícone cinza ou com X na barra inferior = login não foi feito. Clique nele → "Sign in to GitHub" → use a conta da organização da empresa.
     </div>
   </div>
 
