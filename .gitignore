@@ -1,1 +1,23 @@
-img/
+# Ignore image drafts by default. Allow only reviewed assets used by the course.
+img/*
+!img/
+!img/abrir-com-code.png
+!img/botao-extensao.png
+!img/Extensao-aberta.png
+!img/extensao-copilot-chat.png
+!img/github-convite-organizacao-redigido.png
+!img/github-copilot-acesso-redigido.png
+!img/github-copilot-licenca-redigido.png
+!img/github-organizacao-redigido.png
+!img/github-perfil-email-redigido.png
+!img/vscode-conta-github-redigido.png
+!img/vscode-instalacao-00-download.png
+!img/vscode-instalacao-01-pagina-download.png
+!img/vscode-instalacao-02.png
+!img/vscode-instalacao-03.png
+!img/vscode-instalacao-04.png
+!img/vscode-instalacao-05.png
+!img/vscode-instalacao-06.png
+!img/vscode-instalacao-07.png
+!img/vscode-instalacao-download.png
+!img/vscode-welcome.png

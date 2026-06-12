@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Studio Code (VSCode) - Instalacao e Configuracao | Everymind Ai/r</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface2: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --purple: #8957e5;
+      --purple-light: #b083f0;
+      --blue: #58a6ff;
+      --green: #3fb950;
+      --yellow: #e3b341;
+      --orange: #f0883e;
+    }
+    @page { size: A4; margin: 14mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      background: #0b1220;
+      color: #79c0ff;
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 0.95em;
+    }
+    .topbar {
+      background: var(--surface);
+      border-bottom: 3px solid var(--blue);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo {
+      color: var(--purple-light);
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .toplinks {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .toplinks .primary-link {
+      background: var(--blue);
+      color: white;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-weight: 700;
+    }
+    .toplinks .primary-link:hover { text-decoration: none; opacity: 0.9; }
+    .hero {
+      background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+      padding: 54px 40px 38px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-kicker {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h1 {
+      color: var(--text);
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.06;
+      margin: 0 auto 16px;
+      max-width: 960px;
+    }
+    .intro {
+      color: var(--muted);
+      font-size: 20px;
+      max-width: 780px;
+      margin: 0 auto 24px;
+    }
+    .meta-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface2);
+      color: var(--muted);
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 28px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 36px 40px 52px;
+    }
+    .toc {
+      position: sticky;
+      top: 82px;
+      align-self: start;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .toc-title {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      color: var(--text);
+      font-size: 14px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(48, 54, 61, 0.65);
+    }
+    .toc a:last-child { border-bottom: none; }
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.16);
+      break-inside: avoid;
+    }
+    .section-head {
+      padding: 22px 26px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-label {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h2 {
+      color: var(--text);
+      font-size: 26px;
+      line-height: 1.2;
+      page-break-after: avoid;
+    }
+    .section-body {
+      padding: 22px 26px 26px;
+    }
+    p { color: var(--muted); margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .step-grid {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+    .step-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+    }
+    .step-title {
+      color: var(--text);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .note {
+      border-left: 4px solid var(--yellow);
+      background: #1c1a05;
+      border-radius: 8px;
+      color: var(--yellow);
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+    .download-card {
+      border-left: 4px solid var(--green);
+      background: #0a1f10;
+      border-radius: 8px;
+      color: #7ee787;
+      padding: 14px 18px;
+      margin: 16px 0 20px;
+    }
+    .continue-card {
+      background: #0d1f2d;
+      border: 1px solid var(--blue);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .continue-card strong {
+      color: var(--text);
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    .continue-card span { color: var(--muted); font-size: 15px; }
+    .continue-card a {
+      background: var(--blue);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .continue-card a:hover { text-decoration: none; opacity: 0.9; }
+    .figure-image {
+      display: block;
+      width: 100%;
+      max-width: 920px;
+      height: auto;
+      margin: 18px auto 4px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+      page-break-inside: avoid;
+    }
+    .small-image { max-width: 700px; }
+    .terminal-image { max-width: 620px; }
+    .page-break { display: none; }
+    .footer {
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+      padding: 24px 40px;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .topbar { position: static; padding: 14px 20px; flex-direction: column; align-items: flex-start; }
+      .toplinks { flex-wrap: wrap; }
+      .hero { padding: 40px 20px 30px; }
+      .layout { grid-template-columns: 1fr; padding: 24px 20px 40px; }
+      .toc { position: static; }
+      .section-head, .section-body { padding-left: 18px; padding-right: 18px; }
+      .continue-card { align-items: flex-start; flex-direction: column; }
+    }
+    @media print {
+      :root {
+        --bg: #fff;
+        --surface: #fff;
+        --surface2: #f6f8fa;
+        --border: #d0d7de;
+        --text: #1f2328;
+        --muted: #57606a;
+        --blue: #0969da;
+        --purple-light: #8957e5;
+      }
+      body { background: #fff; color: #1f2328; font-size: 11pt; }
+      .topbar, .toc, .footer { display: none; }
+      .hero { padding: 0 0 18px; background: #fff; border-bottom: 3px solid var(--blue); text-align: left; }
+      .hero-kicker { color: var(--blue); }
+      h1 { font-size: 28pt; margin: 0 0 8px; }
+      .intro { margin: 0 0 12px; max-width: none; font-size: 12pt; }
+      .meta-row { justify-content: flex-start; }
+      .pill { background: #f6f8fa; color: #57606a; }
+      .layout { display: block; padding: 18px 0 0; max-width: none; }
+      .content { display: block; }
+      .section { box-shadow: none; border-radius: 8px; margin-bottom: 18px; break-inside: avoid; }
+      .section-head, .section-body { padding: 14px 16px; }
+      h2 { font-size: 18pt; }
+      .figure-image { box-shadow: none; max-width: 100%; margin-top: 12px; }
+      .page-break { display: block; break-before: page; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">Everymind Ai/r</div>
+    <nav class="toplinks" aria-label="Navegacao principal">
+      <a class="primary-link" href="Sessao-1-Primeiros-Passos/Parte-1-Preparacao-Ambiente/slides.html">Voltar aos slides</a>
+      <a href="index.html">Voltar ao indice</a>
+      <a href="Visual%20Studio%20Code%20VSCode%20-%20Instalacao%20e%20Configuracao%20-%20redigido.pdf">Abrir PDF</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-kicker">Preparacao do Ambiente</div>
+    <h1>Visual Studio Code: Instalacao e Configuracao</h1>
+    <p class="intro">Um guia visual para instalar o VS Code, configurar os atalhos importantes e confirmar que o comando <code>code .</code> esta funcionando.</p>
+    <div class="meta-row">
+      <span class="pill">Windows</span>
+      <span class="pill">VS Code</span>
+      <span class="pill">GitHub Copilot Enterprise</span>
+    </div>
+  </section>
+
+  <main class="layout">
+    <aside class="toc" aria-label="Sumario">
+      <div class="toc-title">Nesta pagina</div>
+      <a href="#introducao">Introducao</a>
+      <a href="#download">Download</a>
+      <a href="#instalador">Instalador</a>
+      <a href="#atalhos">Atalhos importantes</a>
+      <a href="#teste">Teste da instalacao</a>
+      <a href="#path">Teste do PATH</a>
+      <a href="#proximos-passos">Proximos passos</a>
+    </aside>
+
+    <div class="content">
+      <section class="section" id="introducao">
+        <div class="section-head">
+          <div class="section-label">Visao geral</div>
+          <h2>Por que instalar o VS Code?</h2>
+        </div>
+        <div class="section-body">
+          <p>O Visual Studio Code e uma das IDEs, ou ambientes de desenvolvimento integrado, mais populares do mercado.</p>
+          <p>Essa ferramenta e multiplataforma, estando disponivel para Windows, Linux e MacOS, e pode ser adaptada para diferentes necessidades por meio da instalacao de extensoes.</p>
+          <p>Neste material, o foco e preparar o ambiente para trabalhar com o GitHub Copilot de forma simples e organizada.</p>
+        </div>
+      </section>
+
+      <section class="section" id="download">
+        <div class="section-head">
+          <div class="section-label">Passo inicial</div>
+          <h2>Baixar o instalador oficial</h2>
+        </div>
+        <div class="section-body">
+          <p>Para iniciar a instalacao, acesse <a href="https://code.visualstudio.com/">code.visualstudio.com</a> e clique no botao de download para Windows.</p>
+          <div class="download-card">Use sempre o site oficial para baixar o instalador.</div>
+          <img class="figure-image" src="img/vscode-instalacao-01-pagina-download.png" alt="Pagina oficial do VS Code com o botao de download para Windows">
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section class="section" id="instalador">
+        <div class="section-head">
+          <div class="section-label">Assistente de instalacao</div>
+          <h2>Executar o instalador</h2>
+        </div>
+        <div class="section-body">
+          <div class="step-grid">
+            <div class="step-number">1</div>
+            <div>
+              <div class="step-title">Aceitar os termos</div>
+              <p>Apos baixar, abra o instalador com dois cliques. Na primeira tela, aceite os termos e clique em proximo.</p>
+            </div>
+          </div>
+          <img class="figure-image" src="img/vscode-instalacao-download.png" alt="Tela de acordo de licenca do instalador do Visual Studio Code">
+
+          <div class="step-grid">
+            <div class="step-number">2</div>
+            <div>
+              <div class="step-title">Escolher o local de instalacao</div>
+              <p>Voce pode escolher o local de preferencia ou manter a pasta sugerida pelo instalador.</p>
+            </div>
+          </div>
+          <img class="figure-image" src="img/vscode-instalacao-02.png" alt="Tela para selecionar a pasta de destino da instalacao do Visual Studio Code">
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section class="section" id="atalhos">
+        <div class="section-head">
+          <div class="section-label">Configuracoes recomendadas</div>
+          <h2>Atalhos e tarefas adicionais</h2>
+        </div>
+        <div class="section-body">
+          <div class="step-grid">
+            <div class="step-number">3</div>
+            <div>
+              <div class="step-title">Configurar atalho no Menu Iniciar</div>
+              <p>A criacao do atalho do VS Code no Menu Iniciar fica a seu criterio. Manter a opcao padrao costuma ser suficiente.</p>
+            </div>
+          </div>
+          <img class="figure-image" src="img/vscode-instalacao-03.png" alt="Tela para selecionar a pasta do Menu Iniciar do Visual Studio Code">
+
+          <div class="step-grid">
+            <div class="step-number">4</div>
+            <div>
+              <div class="step-title">Selecionar tarefas adicionais</div>
+              <p>Esta etapa facilita bastante o uso diario: crie atalho na area de trabalho, habilite Abrir com Code nos menus de contexto, registre o Code como editor e adicione ao PATH.</p>
+            </div>
+          </div>
+          <img class="figure-image" src="img/vscode-instalacao-04.png" alt="Tela de tarefas adicionais do instalador do Visual Studio Code">
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section class="section" id="teste">
+        <div class="section-head">
+          <div class="section-label">Conferencia no Windows</div>
+          <h2>Testar se a instalacao funcionou</h2>
+        </div>
+        <div class="section-body">
+          <p>Com o VS Code instalado, clique com o botao direito em uma pasta ou em uma area vazia dentro dela. A opcao para abrir com o Code deve aparecer no menu de contexto.</p>
+          <img class="figure-image small-image" src="img/vscode-instalacao-00-download.png" alt="Menu de contexto do Windows com a opcao Abrir com Code">
+
+          <p>Voce tambem pode selecionar uma pasta especifica e clicar com o botao direito do mouse nela.</p>
+          <img class="figure-image small-image" src="img/vscode-instalacao-05.png" alt="Menu de contexto aberto ao clicar com o botao direito em uma pasta">
+
+          <div class="note">No Windows 11, talvez seja necessario clicar em Mostrar mais opcoes para visualizar as opcoes do VS Code.</div>
+          <img class="figure-image small-image" src="img/vscode-instalacao-06.png" alt="Menu de contexto do Windows 11 com a opcao Mostrar mais opcoes">
+        </div>
+      </section>
+
+      <div class="page-break"></div>
+
+      <section class="section" id="path">
+        <div class="section-head">
+          <div class="section-label">Terminal</div>
+          <h2>Testar o comando code ponto</h2>
+        </div>
+        <div class="section-body">
+          <p>Para testar se o VS Code foi adicionado ao PATH corretamente, abra o terminal na pasta desejada e execute:</p>
+          <p><code>code .</code></p>
+          <img class="figure-image terminal-image" src="img/vscode-instalacao-07.png" alt="Terminal Windows PowerShell executando o comando code ponto">
+          <p>Ao usar esse comando, a pasta para onde o terminal esta apontando sera aberta no VS Code. Se isso funcionar, a instalacao foi concluida com sucesso.</p>
+        </div>
+      </section>
+
+      <section class="section" id="proximos-passos">
+        <div class="section-head">
+          <div class="section-label">Depois da instalacao</div>
+          <h2>Proximos passos</h2>
+        </div>
+        <div class="section-body">
+          <p>Depois da instalacao, voce pode personalizar o VS Code com extensoes, temas e ajustes de preferencias conforme sua rotina de trabalho.</p>
+          <p>Para Linux e MacOS, consulte a documentacao oficial, pois os passos podem variar conforme a distribuicao ou versao do sistema.</p>
+          <div class="continue-card">
+            <div>
+              <strong>Continuar o treinamento</strong>
+              <span>Volte para os slides da Parte 1 e siga para a instalacao das extensoes do Copilot.</span>
+            </div>
+            <a href="Sessao-1-Primeiros-Passos/Parte-1-Preparacao-Ambiente/slides.html">Voltar aos slides</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">Everymind Ai/r - Treinamento GitHub Copilot Enterprise</footer>
+</body>
+</html>

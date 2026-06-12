@@ -128,7 +128,7 @@
     /* Screenshot blocks */
     .ss-block { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: inline-block; }
     .ss-label { font-size: 11px; color: var(--muted); padding: 6px 12px; background: var(--surface); border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; }
-    .ss-block img { display: block; max-height: 200px; object-fit: contain; background: #1e1e1e; padding: 8px; }
+    .ss-block img { display: block; max-height: 200px; max-width: 100%; object-fit: contain; background: #1e1e1e; padding: 8px; }
     @media print {
       .ftr { display: none; }
       .slide { display: block !important; page-break-after: always; height: auto; overflow: visible; }
@@ -227,8 +227,8 @@
     </div>
     <div style="margin: 4px 0 14px 52px;">
       <div class="ss-block">
-        <div class="ss-label">Demonstração local</div>
-        <p style="padding:14px 16px; color:var(--muted); font-size:15px; margin:0">Print removido da versão publicada. Demonstre localmente o menu de contexto do Windows Explorer.</p>
+        <div class="ss-label">Menu de contexto do Windows</div>
+        <img src="../../img/abrir-com-code.png" alt="Menu de contexto do Windows Explorer com a opção Abrir com Code">
       </div>
     </div>
     <div class="step">

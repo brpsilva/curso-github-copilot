@@ -99,6 +99,19 @@
       color: var(--blue); font-size: 15px; margin: 10px 0;
     }
     .tip::before { content: '💡 Dica: '; font-weight: 700; }
+    .resource-card {
+      background: #0d1f2d; border: 1px solid var(--blue);
+      border-radius: 10px; padding: 14px 18px; margin: 14px 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .resource-card > div > strong { color: var(--text); font-size: 17px; display: block; margin-bottom: 2px; }
+    .resource-card span { color: var(--muted); font-size: 14px; }
+    .resource-actions { display: flex; gap: 10px; flex-shrink: 0; }
+    .resource-actions a {
+      background: var(--blue); color: white; text-decoration: none;
+      border-radius: 8px; padding: 8px 14px; font-size: 14px; font-weight: 700;
+    }
+    .resource-actions a.secondary { background: var(--surface2); border: 1px solid var(--border); }
     .highlight {
       background: #1c1a05; border: 1px solid var(--yellow);
       border-radius: 8px; padding: 14px 18px;
@@ -121,6 +134,17 @@
     .ext-name { font-size: 18px; font-weight: 700; color: var(--text); }
     .ext-desc { font-size: 15px; color: var(--muted); }
     .ext-badge { margin-left: auto; background: var(--purple); color: white; padding: 4px 12px; border-radius: 16px; font-size: 13px; font-weight: 700; }
+    .extension-icon-callout {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-left: 4px solid var(--blue); border-radius: 10px;
+      display: flex; align-items: center; gap: 14px;
+      padding: 10px 14px; margin: -4px 0 12px 52px;
+      color: var(--muted); font-size: 14px;
+    }
+    .extension-icon-callout img {
+      width: 46px; height: 46px; object-fit: contain;
+      background: #15191d; border: 1px solid var(--border); border-radius: 8px;
+    }
     .login-steps { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 10px; }
     .ok-list { list-style: none; }
     .ok-list li { padding: 8px 0; font-size: 17px; border-bottom: 1px solid var(--border); }
@@ -129,13 +153,15 @@
     /* Screenshots reais */
     .ss-block { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
     .ss-label { font-size: 11px; color: var(--muted); padding: 6px 12px; background: var(--surface); border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 1px; }
-    .ss-block img { width: 100%; display: block; max-height: 160px; object-fit: contain; background: #0d1117; }
+    .ss-block img { width: 100%; height: 240px; display: block; max-height: none; object-fit: contain; background: #0d1117; }
     .ss-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0; }
     .ss-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 8px 0; }
     .ss-solo { margin: 8px 0; }
-    .ss-solo .ss-block img { max-height: 180px; }
+    .ss-solo .ss-block img { height: 270px; }
+    .ss-vscode-welcome { width: 960px; max-width: 100%; margin: 8px auto; }
+    .ss-vscode-welcome .ss-block img { width: 960px; max-width: 100%; height: auto; aspect-ratio: 16 / 9; max-height: none; object-fit: contain; }
     #slide-verificacao .ss-row-2 { grid-template-columns: repeat(4, 1fr); }
-    #slide-verificacao .ss-block img { max-height: 276px; }
+    #slide-verificacao .ss-block img { height: 414px; }
     /* Footer nav */
     .ftr {
       background: var(--surface); border-top: 1px solid var(--border);
@@ -199,7 +225,12 @@
       É o <strong style="color:var(--accent)">escritório digital</strong> onde você vai trabalhar junto com o GitHub Copilot.
       Pense nele como um bloco de notas muito mais inteligente.
     </p>
-    <div class="privacy-note">Imagem demonstrativa removida da versão publicada. O instrutor pode exibir a tela real localmente durante a aula.</div>
+    <div class="ss-solo ss-vscode-welcome">
+      <div class="ss-block">
+        <div class="ss-label">VS Code aberto pela primeira vez</div>
+        <img src="../../img/vscode-welcome.png" alt="Tela inicial do VS Code com atalhos para abrir arquivos, instalar extensões e começar um projeto">
+      </div>
+    </div>
     <div class="grid-3">
       <div class="card card-blue">
         <div class="card-icon">📁</div>
@@ -258,6 +289,16 @@
         <p>Procure por <strong>VS Code</strong> no menu Iniciar e abra o programa</p>
       </div>
     </div>
+    <div class="resource-card">
+      <div>
+        <strong>Guia visual de instalação do VS Code</strong>
+        <span>Material de apoio com prints do download, instalador, atalhos e teste do comando <strong style="color:var(--blue)">code .</strong></span>
+      </div>
+      <div class="resource-actions">
+        <a href="../../vscode-instalacao-configuracao-redigido.html" target="_blank" rel="noopener">Abrir guia</a>
+        <a class="secondary" href="../../Visual%20Studio%20Code%20VSCode%20-%20Instalacao%20e%20Configuracao%20-%20redigido.pdf" target="_blank" rel="noopener">PDF</a>
+      </div>
+    </div>
     <div class="tip">O VS Code é gratuito e criado pela Microsoft. É usado por mais de 15 milhões de pessoas no mundo todo.</div>
   </div>
 
@@ -271,6 +312,10 @@
         <h4>Clique no ícone de extensões</h4>
         <p>Na barra lateral esquerda, clique no ícone de peças de quebra-cabeça 🧩 (ou pressione <strong>Ctrl+Shift+X</strong>)</p>
       </div>
+    </div>
+    <div class="extension-icon-callout">
+      <img src="../../img/botao-extensao.png" alt="Ícone de extensões na barra lateral do VS Code">
+      <span>Este é o botão de Extensões na barra lateral esquerda do VS Code.</span>
     </div>
     <div class="step">
       <div class="step-n">2</div>
@@ -304,7 +349,16 @@
         <span class="ext-badge">Obrigatória</span>
       </div>
     </div>
-    <div class="privacy-note">Print removido da versão publicada. Para demonstrar ao vivo, pesquise "GitHub Copilot Chat" no painel de extensões do VS Code.</div>
+    <div class="ss-row-2">
+      <div class="ss-block">
+        <div class="ss-label">Painel de extensões aberto</div>
+        <img src="../../img/Extensao-aberta.png" alt="Painel de extensões do VS Code aberto com campo de pesquisa e recomendações">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">Pesquisa por GitHub Copilot Chat</div>
+        <img src="../../img/extensao-copilot-chat.png" alt="Painel de extensões do VS Code exibindo a extensão GitHub Copilot Chat">
+      </div>
+    </div>
   </div>
 
   <!-- Slide 5: Login corporativo -->
@@ -321,7 +375,18 @@
       </div>
     </div>
 
-    <div class="privacy-note">Prints de e-mail removidos da versão publicada para proteger dados internos. Use exemplos locais somente durante a aula.</div>
+    <div class="ss-row-2">
+      <div class="ss-block">
+        <div class="ss-label">Convite da organização</div>
+        <img src="../../img/github-convite-organizacao-redigido.png" alt="Convite do GitHub para entrar na organização da empresa com dados sensíveis ocultados">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">Acesso ao Copilot liberado</div>
+        <img src="../../img/github-copilot-acesso-redigido.png" alt="Confirmação de acesso ao GitHub Copilot após aceitar o convite com dados sensíveis ocultados">
+      </div>
+    </div>
+
+    <div class="privacy-note">Antes de publicar fora da aula, revise estes prints: eles podem mostrar usuário, organização e e-mail reais.</div>
 
     <div class="login-steps">
       <div class="step" style="margin-bottom:10px">
@@ -335,7 +400,7 @@
         <div class="step-n">2</div>
         <div class="step-body">
           <h4>Entre com a conta da organização da empresa</h4>
-          <p>Use o usuário e senha da conta github.com dos emails acima — é ela que tem a licença ativa</p>
+          <p>Use a conta github.com autorizada pela organização — é ela que tem a licença ativa</p>
         </div>
       </div>
       <div class="step">
@@ -360,6 +425,25 @@
       <li>Licença GitHub Copilot Business confirmada</li>
       <li>Contas GitHub e Microsoft conectadas, quando solicitado</li>
     </ul>
+
+    <div class="ss-row-2" style="margin-top:12px">
+      <div class="ss-block">
+        <div class="ss-label">Conta conectada no VS Code</div>
+        <img src="../../img/vscode-conta-github-redigido.png" alt="Menu de contas do VS Code mostrando a conta GitHub conectada com dados sensíveis ocultados">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">Perfil corporativo no GitHub</div>
+        <img src="../../img/github-perfil-email-redigido.png" alt="Perfil do GitHub com e-mail corporativo ocultado">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">Organização da empresa</div>
+        <img src="../../img/github-organizacao-redigido.png" alt="Comprovante de participação na organização da empresa no GitHub com dados sensíveis ocultados">
+      </div>
+      <div class="ss-block">
+        <div class="ss-label">Licença Copilot</div>
+        <img src="../../img/github-copilot-licenca-redigido.png" alt="Tela confirmando licença do GitHub Copilot com dados sensíveis ocultados">
+      </div>
+    </div>
 
     <div class="highlight" style="font-size:15px; margin-top:10px">
       ⚠️ Ícone cinza ou com X na barra inferior = login não foi feito. Clique nele → "Sign in to GitHub" → use a conta da organização da empresa.
